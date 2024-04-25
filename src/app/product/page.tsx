@@ -1,9 +1,9 @@
 import React from "react";
 
-const MenuPage = () => {
+const ProductPage = () => {
   return (
     <div>Menu</div>
   )
 }
 
-export default MenuPage
+export default ProductPage
