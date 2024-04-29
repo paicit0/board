@@ -1,9 +1,9 @@
 import React from "react";
 
-const MenuPage = () => {
+const Menu = () => {
   return (
-    <div>MenuPage</div>
+    <div className="bg-red-50">Menu</div>
   )
 }
 
-export default MenuPage
+export default Menu
