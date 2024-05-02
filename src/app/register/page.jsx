@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from "next/link";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div className= 'bg-red-300 container mx-auto columns-1'>
-      <p className='text-center'>Login</p>
+      <p className='text-center'>Register</p>
       <form className='flex flex-col'>
         <label className='text-center'>
           Username:
@@ -14,12 +14,9 @@ const LoginPage = () => {
           Password:
           <input type="text" password="Password" />
         </label>
-        <input type="submit" value="Submit" className='bg-blue-300'/>
+        <input type="submit" value="Register" className='bg-blue-300'/>
       </form>
-      <div className='text-right'>
-        <Link href='/register'>Register</Link>
-      </div>
     </div>  
     )}
 
-export default LoginPage
+export default RegisterPage
