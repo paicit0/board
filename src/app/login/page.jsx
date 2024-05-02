@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 
 const LoginPage = () => {
   return (
-    <div className= 'bg-red-300'>
+    <div className= 'bg-red-300 container'>
       <form className='flex flex-col'>
         <label className='text-center'>
           Username:
