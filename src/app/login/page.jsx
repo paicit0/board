@@ -3,23 +3,22 @@ import Link from "next/link";
 
 const LoginPage = () => {
   return (
-    <div className= 'bg-red-300 container mx-auto columns-1'>
-      <p className='text-center'>Login</p>
-      <form className='flex flex-col'>
-        <label className='text-center'>
-          Username:
-          <input type="text" username="Username" />
-        </label>
-        <label className='text-center'>
-          Password:
-          <input type="text" password="Password" />
-        </label>
-        <input type="submit" value="Submit" className='bg-blue-300'/>
-      </form>
-      <div className='text-right'>
-        <Link href='/register'>Register</Link>
+<div className='flex-grow'>
+      <div className="flex justify-center items-center">
+        <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
+          <h3 className='text-3xl'>Login Page</h3>
+          <hr className='my-3' />
+          <form>
+            <input type="text" className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Enter your email' />
+            <input type="password" className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Enter your password' />
+            <button type='submit' className='bg-green-500 text-white border py-2 px-3 rounded text-lg my-2'>Sign in</button>
+          </form>
+          <hr className='my-3' />
+          <p><Link href="/register" className='text-blue-500 hover:underline text-right'>Register</Link> Page</p>
+        </div>
       </div>
-    </div>  
-    )}
+    </div>
+  )
+}
 
 export default LoginPage

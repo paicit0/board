@@ -14,7 +14,6 @@ const Layout = ({ children }) => {
           <div>
             <title>Restaurant</title>
             <meta name="description" content="Welcome to the Restaurant!" />
-            <link rel="icon" href="/favicon.ico" />
           </div>
           <main>{children}</main>
           <Footer />
