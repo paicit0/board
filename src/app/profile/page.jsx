@@ -1,26 +1,22 @@
+"use client"
+
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
-  const { data: session, status } = useSession();
+export default function Home() {
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-
-  if (!session) {
-    return <p>You are not logged in.</p>;
-  }
+  const { data: session } = useSession();
+  if (!session) redirect("/login");
+  console.log(session)
 
   return (
-    <div className='flex-grow'>
-      <div className="flex justify-center items-center">
-        <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
-          <h3 className='text-3xl'>Profile</h3>
-          <hr className='my-3' />
-          <p>Your email address: {session.user.email}</p>
-          <p>Your user role: {session.user.role}</p>
-        </div>
+    <main>
+      <div className="flex-grow text-center p-10">
+        <h3 className="text-5xl">This is your profile page, {session?.user?.name}</h3>
+        <p className="text-2xl mt-3">Your email address: {session?.user?.email}</p>
+        <p className="text-2xl mt-3">Your user role: {session?.user?.role}</p>
       </div>
-    </div>
+    </main>
+
   );
 }

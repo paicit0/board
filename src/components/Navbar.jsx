@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import React from "react";
+import { signOut, useSession } from "next-auth/react";
 import Menu from "./Menu";
 import Link from "next/link";
-import Image from "next/image";
-import { signOut } from "next-auth/react";
 
 const Navbar = () => {
-  const user = false;
+  const { data: session, status } = useSession();
+
   return (
     <nav className="h-12 text-white bg-red-700 p-4 flex items-center justify-between border-b-2 border-b-red-500 uppercase md:h-24 lg:px-20 xl:px-40">
       {/* LEFT LINKS */}
@@ -27,10 +27,17 @@ const Navbar = () => {
       
       {/* RIGHT LINKS */}
       <div className="hidden md:flex gap-4 items-center justify-end flex-1">
-        {!user ? (
+        {status === "loading" ? (
+          <p>Loading...</p>
+        ) : !session ? (
           <Link href="/login">Login</Link>
         ) : (
-          <Link href="/profile">Profile</Link>
+          <>
+            <Link href="/profile">Profile</Link>
+            <button onClick={() => signOut({ callbackUrl: '/login' })}>
+              Sign Out
+            </button>
+          </>
         )}
       </div>
     </nav>
@@ -38,4 +45,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
