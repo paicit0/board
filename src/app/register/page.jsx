@@ -12,60 +12,61 @@ function RegisterPage() {
   const [success, setSuccess] = useState("");
 
   const { data: session } = useSession();
-    if (session) redirect('/welcome');
+  const router = useRouter();
+  
+  if (session) router.replace('/welcome');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (password != confirmPassword) {
-            setError("Password do not match!");
-            return;
-        }
-
-        if (!email || !password || !confirmPassword) {
-            setError("Please complete all inputs.");
-            return;
-        }
-
-        const resCheckUser = await fetch("http://localhost:3000/api/checkUser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email })
-        })
-
-        const { user } = await resCheckUser.json();
-
-        if (user) { 
-            setError("User already exists.");
-            return;
-        }
-
-        try {
-            const res = await fetch("http://localhost:3000/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email, password
-                })
-            })
-
-            if (res.ok) {
-                const form = e.target;
-                setError("");
-                setSuccess("User registration successfully!");
-                form.reset();
-            } else {
-                console.log("User registration failed.")
-            }
-
-        } catch(error) {
-            console.log("Error during registration: ", error)
-        }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
     }
+
+    if (!email || !password || !confirmPassword) {
+      setError("Please complete all inputs.");
+      return;
+    }
+
+    const resCheckUser = await fetch("http://localhost:3000/api/checkUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const { user } = await resCheckUser.json();
+
+    if (user) { 
+      setError("User already exists.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (res.ok) {
+        setError("");
+        setSuccess("User registration successful! Redirecting...");
+        setTimeout(() => {
+          router.replace('/login');
+        }, 2000);
+      } else {
+        setError("User registration failed.");
+      }
+    } catch (error) {
+      console.log("Error during registration: ", error);
+      setError("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className='flex-grow'>

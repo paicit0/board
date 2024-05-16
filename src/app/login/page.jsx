@@ -33,7 +33,7 @@ function LoginPage() {
       setSuccess("Login successful! Redirecting...");
 
       setTimeout(() => {
-        router.replace("/welcome");
+        router.replace("/");
       }, 2000);
     } catch (error) {
       console.log(error);
