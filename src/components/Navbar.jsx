@@ -9,7 +9,7 @@ const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="h-12 text-white bg-red-700 p-4 flex items-center justify-between border-b-2 border-b-red-500 uppercase md:h-24 lg:px-20 xl:px-40">
+    <nav className="h-12 text-white bg-red-700 p-4 flex items-center justify-between border-b-2 border-b-red-500 md:h-24 lg:px-20 xl:px-40">
       {/* LEFT LINKS */}
       <div className="hidden md:flex gap-4 flex-1">
         <Link href="/">Home</Link>
