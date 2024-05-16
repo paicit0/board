@@ -1,7 +1,10 @@
+"use client"
+
 import React from "react";
 import Menu from "./Menu";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const user = false;
@@ -35,3 +38,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { SessionProvider } from "next-auth/react"
 
 function App() {
   return (

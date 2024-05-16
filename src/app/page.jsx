@@ -1,13 +1,17 @@
-import React from 'react';
-import Slider from '@/components/Slider';
+"use client";
 
-const HomePage = () => {
+import { useSession } from "next-auth/react";
+
+export default function Home() {
+  const { data: session } = useSession();
+
   return (
-    <div className="grid grid-cols-3 gap-4 p-4">
-      <Slider />
-      
-    </div>
+    <main>
+      <div className="flex-grow text-center p-10">
+        <div className="flex justify-center my-10">
+        </div>
+
+      </div>
+    </main>
   );
 }
-
-export default HomePage;
