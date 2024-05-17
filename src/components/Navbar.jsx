@@ -2,7 +2,6 @@
 
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
-import Menu from "./Menu";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -13,7 +12,6 @@ const Navbar = () => {
       {/* LEFT LINKS */}
       <div className="hidden md:flex gap-4 flex-1">
         <Link href="/">Home</Link>
-        <Link href="/contact">Contact</Link>
       </div>
 
       <div className="text-xl md:font-bold flex-1 md:text-center">
@@ -22,7 +20,6 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       <div className="md:hidden">
-        <Menu />
       </div>
       
       {/* RIGHT LINKS */}
