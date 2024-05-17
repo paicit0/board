@@ -24,13 +24,13 @@ function LoginPage() {
       });
 
       if (res.error) {
-        setError("Invalid credentials");
+        setError("Wrong Email or Password.");
         setSuccess("");
         return;
       }
 
       setError("");
-      setSuccess("Login successful! Redirecting...");
+      setSuccess("Login successful. Redirecting...");
 
       setTimeout(() => {
         router.replace("/");
@@ -51,9 +51,7 @@ function LoginPage() {
               {error}
             </div>
           )}
-          <h3 className="text-3xl">Login Page</h3>
-          <hr className="my-3" />
-
+          <h3 className="text-3xl text-center">Login</h3>
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -70,19 +68,16 @@ function LoginPage() {
 
             <button
               type="submit"
-              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 text-white"
+              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
                 }`}
             >
               {success || "Sign In"}
             </button>
           </form>
-          <hr className="my-3" />
           <p>
-            Go to{" "}
-            <Link href="/register" className="text-blue-500 hover:underline">
+            <Link href="/register" className="hover:underline text-right font-semibold">
               Register
             </Link>{" "}
-            Page
           </p>
         </div>
       </div>

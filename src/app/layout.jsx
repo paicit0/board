@@ -16,7 +16,6 @@ import { AuthProvider } from "./Providers";
         </head>
         <body>
           <AuthProvider>
-            <Notification />
             <Navbar />
             <main>{children}</main>
             <Footer />

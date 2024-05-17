@@ -72,8 +72,7 @@ function RegisterPage() {
     <div className='flex-grow'>
       <div className="flex justify-center items-center">
         <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
-          <h3 className='text-3xl'>Register Page</h3>
-          <hr className='my-3' />
+          <h3 className='text-3xl text-center'>Register</h3>
           <form onSubmit={handleSubmit}>
             {error && (
               <div className='bg-red-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
@@ -103,10 +102,9 @@ function RegisterPage() {
               className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2'
               placeholder='Confirm your password'
             />
-            <button type='submit' className='bg-green-500 text-white border py-2 px-3 rounded text-lg my-2'>Sign Up</button>
+            <button type='submit' className='bg-blue-500 hover:bg-blue-600 text-white border py-2 px-3 rounded text-lg my-2'>Sign Up</button>
           </form>
-          <hr className='my-3' />
-          <p>Go to <Link href="/login" className='text-blue-500 hover:underline'>Login</Link> Page</p>
+          <Link href="/login" className='hover:underline font-semibold'>Login</Link>
         </div>
       </div>
     </div>
