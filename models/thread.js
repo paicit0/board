@@ -6,7 +6,7 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
-        content: {
+        threadContent: {
             type: String,
             required: true
         },
@@ -18,6 +18,10 @@ const userSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Reply'
         },
+        replyCount: {
+            type: Number,
+            default: 0
+        }
         
     },
     { timestamps: true }

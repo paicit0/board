@@ -6,12 +6,12 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
-        createAt: {
+        createdAt: {
             type:String,
             required: true,
             default: Date.now
         },
-        thread: {
+        threadId: {
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Thread'
         },
@@ -20,6 +20,7 @@ const userSchema = new Schema(
             ref: 'Reply', 
             default: null
         },
+        
 
     },
     { timestamps: true }
