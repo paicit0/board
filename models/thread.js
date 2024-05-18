@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const userSchema = new Schema(
+const threadSchema = new Schema(
     {
         title: {
             type: String,
@@ -14,18 +14,30 @@ const userSchema = new Schema(
             type: Date,
             default: Date.now
         },
-        replies: {
+        replies: [{
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Reply'
-        },
+        }],
         replyCount: {
+            type: Number,
+            default: 0
+        },
+        threadUpvotes: {
+            type: Number,
+            default: 0
+        },
+        threadDownvotes: {
             type: Number,
             default: 0
         }
         
     },
     { timestamps: true }
-)
+);
 
-const Thread = mongoose.models.Thread || mongoose.model("Thread", userSchema);
+threadSchema.virtual('threadNetVotes').get(function() {
+    return this.threadUpvotes - this.threadDownvotes;
+});
+
+const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
 export default Thread;

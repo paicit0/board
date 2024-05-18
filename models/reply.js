@@ -1,30 +1,37 @@
 import mongoose, { Schema } from "mongoose";
 
-const userSchema = new Schema(
+const replySchema = new Schema(
     {
         content: {
             type: String,
             required: true
         },
         createdAt: {
-            type:String,
-            required: true,
+            type:Date,
             default: Date.now
         },
-        threadId: {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Thread'
-        },
-        parentReply: {
+        parentReply: [{
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Reply', 
             default: null
+        }],
+        replyUpvotes: {
+            type: Number,
+            default: 0
         },
+        replyDownvotes: {
+            type: Number,
+            default: 0
+        }
         
 
     },
     { timestamps: true }
-)
+);
 
-const Reply = mongoose.models.Reply || mongoose.model("Reply", userSchema);
+replySchema.virtual('replyNetVotes').get(function() {
+    return this.replyUpvotes - this.replyDownvotes;
+});
+
+const Reply = mongoose.models.Reply || mongoose.model("Reply", replySchema);
 export default Reply;
