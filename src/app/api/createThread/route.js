@@ -1,6 +1,17 @@
 import { NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../../lib/mongodb';
 import Thread from '../../../../models/thread';
+import Counter from '../../../../models/counter';
+
+async function getNextSequenceValue(sequenceName) {
+  const counter = await Counter.findByIdAndUpdate(
+    { _id: sequenceName },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+  console.log('Counter after update:', counter); // Debugging statement
+  return counter.seq;
+}
 
 export async function POST(req) {
   try {
@@ -12,7 +23,11 @@ export async function POST(req) {
 
     await connectMongoDB();
 
+    const threadId = await getNextSequenceValue('threadId');
+    console.log('Generated threadId:', threadId); // Debugging statement
+
     const newThread = new Thread({
+      threadId,
       title,
       threadContent,
       createdAt: new Date(),
@@ -22,7 +37,8 @@ export async function POST(req) {
     });
 
     await newThread.save();
-    return NextResponse.json({ message: "Thread Submitted." }, { status: 201 });
+    console.log('New Thread:', newThread); // Debugging statement
+    return NextResponse.json({ message: "Thread Submitted.", threadId }, { status: 201 });
   } catch (error) {
     console.error("Error submitting thread:", error);
     return NextResponse.json({ message: "An error occurred while submitting the thread." }, { status: 500 });

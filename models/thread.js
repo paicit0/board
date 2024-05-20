@@ -1,7 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
 const threadSchema = new Schema(
-    {
+    {   
+        threadId: {
+            type: Number,
+            required: true,
+            unique: true
+        },
         title: {
             type: String,
             required: true

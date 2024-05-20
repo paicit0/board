@@ -2,8 +2,9 @@
 
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Link from "next/link";
+
 
 
 export default function Home() {
@@ -32,9 +33,11 @@ export default function Home() {
         <div className="flex justify-center my-10">
           <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4">
             {threads.map((thread) => (
-              <div key={thread._id} className="p-5 border-b flex flex-col">
+              <div key={thread.threadId} className="p-5 border-b flex flex-col">
                 <p>Reply: {thread.replyCount}</p>
-                <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
+                <Link href={`/thread/${thread.threadId}`}>
+                  <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
+                </Link>
                 <p className="text-gray-600 break-words line-clamp-6">{thread.threadContent}</p>
                 <p className="text-sm text-gray-400 mt-auto">Date: {new Date(thread.createdAt).toLocaleString()}</p>
                 <div className="flex items-center justify-center">
