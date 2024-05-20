@@ -11,8 +11,8 @@ import { AuthProvider } from "./Providers";
     return (
       <html>
         <head>
-          <title>Restaurant</title>
-          <meta name="description" content="Welcome to the Restaurant!" />
+          <title>Board</title>
+          <meta name="description" content="Welcome to the board." />
         </head>
         <body>
           <AuthProvider>
