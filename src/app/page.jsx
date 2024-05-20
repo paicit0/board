@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 export default function Home() {
