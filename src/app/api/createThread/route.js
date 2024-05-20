@@ -16,6 +16,7 @@ export async function POST(req) {
       title,
       threadContent,
       createdAt: new Date(),
+      replyCount: 0,
       threadUpvotes: 0,
       threadDownvotes: 0,
     });
