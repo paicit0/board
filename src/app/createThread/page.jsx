@@ -22,7 +22,7 @@ function CreateThreadPage() {
       return;
     }
 
-    setError(""); // Clear any previous error messages
+    setError(""); 
 
     const data = {
       title,
@@ -39,7 +39,6 @@ function CreateThreadPage() {
       });
       if (response.ok) {
         setSuccess("Thread created successfully");
-        // Optionally, redirect or update state to reflect the new thread
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Error creating thread");
