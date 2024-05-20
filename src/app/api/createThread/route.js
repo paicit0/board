@@ -2,9 +2,13 @@ import { NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../../lib/mongodb';
 import Thread from '../../../../models/thread';
 
-export async function POST(req, res) {
+export async function POST(req) {
   try {
-    const { title, threadContent } = await req.json(); 
+    const { title, threadContent } = await req.json();
+
+    if (!title || !threadContent) {
+      return NextResponse.json({ message: "Title and content are required." }, { status: 400 });
+    }
 
     await connectMongoDB();
 
@@ -24,6 +28,13 @@ export async function POST(req, res) {
   }
 }
 
-export function GET(req, res) {
-  res.status(405).json({ message: `Method ${req.method} Not Allowed` });
+export async function GET() {
+  try {
+    await connectMongoDB();
+    const threads = await Thread.find().sort({ createdAt: -1 }).exec();
+    return NextResponse.json(threads, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching threads:", error);
+    return NextResponse.json({ message: "An error occurred while fetching the threads." }, { status: 500 });
+  }
 }

@@ -15,7 +15,7 @@ const Navbar = () => {
       </div>
 
       <div className="text-xl md:font-bold flex-1 md:text-center">
-        <Link href="/">Restaurant</Link>
+        <Link href="/">Board</Link>
       </div>
 
       {/* MOBILE MENU */}
