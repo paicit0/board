@@ -10,12 +10,16 @@ const threadSchema = new Schema(
             type: String,
             required: true
         },
+        file: {
+            type: String,
+            required: false
+        },
         createdAt: {
             type: Date,
             default: Date.now
         },
         replies: [{
-            type: mongoose.Schema.Types.ObjectId, 
+            type: Array, 
             ref: 'Reply'
         }],
         replyCount: {

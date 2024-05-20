@@ -11,7 +11,7 @@ const replySchema = new Schema(
             default: Date.now
         },
         parentReply: [{
-            type: mongoose.Schema.Types.ObjectId, 
+            type: Array, 
             ref: 'Reply', 
             default: null
         }],
