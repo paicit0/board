@@ -55,7 +55,7 @@ function RegisterPage() {
 
       if (res.ok) {
         setError("");
-        setSuccess("User registration successful! Redirecting...");
+        setSuccess("Registration completed, Redirecting...");
         setTimeout(() => {
           router.replace('/login');
         }, 2000);
@@ -79,11 +79,6 @@ function RegisterPage() {
                 {error}
               </div>
             )}
-            {success && (
-              <div className='bg-green-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
-                {success}
-              </div>
-            )}
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -102,8 +97,13 @@ function RegisterPage() {
               className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2'
               placeholder='Confirm your password'
             />
-            <button type='submit' className='bg-blue-500 hover:bg-blue-600 text-white border py-2 px-3 rounded text-lg my-2'>Sign Up</button>
-          </form>
+            <button
+              type="submit"
+              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
+                }`}
+            >
+              {success || "Register"}
+            </button>          </form>
           <Link href="/login" className='hover:underline font-semibold'>Login</Link>
         </div>
       </div>
