@@ -9,7 +9,7 @@ async function getNextSequenceValue(sequenceName) {
     { $inc: { seq: 1 } },
     { new: true, upsert: true }
   );
-  console.log('Counter after update:', counter); // Debugging statement
+  console.log('Counter after update:', counter); 
   return counter.seq;
 }
 
@@ -24,7 +24,7 @@ export async function POST(req) {
     await connectMongoDB();
 
     const threadId = await getNextSequenceValue('threadId');
-    console.log('Generated threadId:', threadId); // Debugging statement
+    console.log('Generated threadId:', threadId); 
 
     const newThread = new Thread({
       threadId,
@@ -37,7 +37,7 @@ export async function POST(req) {
     });
 
     await newThread.save();
-    console.log('New Thread:', newThread); // Debugging statement
+    console.log('New Thread:', newThread); 
     return NextResponse.json({ message: "Thread Submitted.", threadId }, { status: 201 });
   } catch (error) {
     console.error("Error submitting thread:", error);

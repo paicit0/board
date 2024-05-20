@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const ThreadPage = () => {
-  const { id } = useParams();
+  const { id } = useParams();  // id here refers to threadId from the URL
   const [thread, setThread] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,6 +36,7 @@ const ThreadPage = () => {
     <div>
       <h1>{thread.title}</h1>
       <p>{thread.threadContent}</p>
+      {thread.file && <img src={thread.file} alt="Attached file" />}
       <p>Created at: {new Date(thread.createdAt).toLocaleString()}</p>
       <p>Reply count: {thread.replyCount}</p>
       <p>Upvotes: {thread.threadUpvotes}</p>
