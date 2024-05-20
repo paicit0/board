@@ -16,6 +16,11 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      setError("Please complete all inputs.");
+      return;
+    }
+
     try {
       const res = await signIn("credentials", {
         email,
