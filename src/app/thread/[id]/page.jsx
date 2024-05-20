@@ -38,17 +38,20 @@ export default function ThreadPage() {
   }
 
   if (!thread) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="flex items-center justify-center min-h-screen">Loading...</p>
+      </div>
+    );
   }
 
   return (
     <main className="flex flex-col items-center justify-start min-h-screen p-10 bg-gray-100">
-      <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">
-        Back to Home
-      </Link>
+      <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">Back to Home</Link>
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
         <div className="p-10 border-b flex flex-col">
           <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
+          <p className="font-bold text-red-500">{thread.threadId}</p>
           <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
           {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
           <p className="mb-2">Replies: {thread.replyCount}</p>
@@ -60,5 +63,6 @@ export default function ThreadPage() {
         </div>
       </div>
     </main>
+
   );
 }

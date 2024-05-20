@@ -79,11 +79,9 @@ function LoginPage() {
               {success || "Sign In"}
             </button>
           </form>
-          <p>
-            <Link href="/register" className="hover:underline text-right font-semibold">
-              Register
-            </Link>{" "}
-          </p>
+
+          {!success && <Link href="/register" className="hover:underline text-right font-semibold">Register</Link>}
+
         </div>
       </div>
     </div>

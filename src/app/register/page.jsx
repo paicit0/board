@@ -29,6 +29,11 @@ function RegisterPage() {
       return;
     }
 
+    if (password.length < 8) {
+      setError("Password needs to be longer than 8 characters")
+      return;
+    }
+
     const resCheckUser = await fetch("http://localhost:3000/api/checkUser", {
       method: "POST",
       headers: {
@@ -99,12 +104,12 @@ function RegisterPage() {
             />
             <button
               type="submit"
-              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
-                }`}
+              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"}`}
+              disabled={success}
             >
               {success || "Register"}
             </button>          </form>
-          <Link href="/login" className='hover:underline font-semibold'>Login</Link>
+          {!success && <Link href="/login" className='hover:underline font-semibold'>Login</Link>}
         </div>
       </div>
     </div>

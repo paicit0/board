@@ -20,9 +20,19 @@ function CreateThreadPage() {
       setError("Empty Title");
       return;
     }
+    
+    if (title.length > 100) {
+      setError(`Title is too long. Maximum length is 100 characters. The current title length is ${title.length} characters.`);
+      return;
+    }
 
     if (threadContent.length === 0) {
       setError("Empty Content");
+      return;
+    }
+
+    if (threadContent.length > 500) {
+      setError(`Content is too long. Maximum length is 500 characters. The current content length is ${threadContent.length} characters.`);
       return;
     }
 
@@ -79,13 +89,13 @@ function CreateThreadPage() {
             ></textarea>
             <button
               type="submit"
-              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-green-500 hover:bg-green-600 text-white"
-                }`}
+              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-green-500 hover:bg-green-600 text-white"}`}
+              disabled={success}
             >
               {success || "Submit"}
             </button>
           </form>
-          <Link href="/" className='hover:underline font-semibold'>Back</Link>
+          {!success && <Link href="/" className='hover:underline font-semibold'>Back</Link>}
         </div>
       </div>
     </div>
