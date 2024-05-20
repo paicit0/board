@@ -1,59 +1,64 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
-const ThreadPage = () => {
-  const { id } = useParams();  // id here refers to threadId from the URL
+export default function ThreadPage() {
+  const { id } = useParams();
   const [thread, setThread] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchThread = async () => {
+      try {
+        const response = await fetch(`/api/threads/${id}`);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data.success) {
+          setThread(data.data);
+        } else {
+          setError(data.message);
+        }
+      } catch (error) {
+        setError("Error fetching thread");
+      }
+    };
+
     if (id) {
-      fetch(`/api/threads/${id}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error('Failed to fetch thread');
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setThread(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setLoading(false);
-        });
+      fetchThread();
     }
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!thread) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div>
-      <h1>{thread.title}</h1>
-      <p>{thread.threadContent}</p>
-      {thread.file && <img src={thread.file} alt="Attached file" />}
-      <p>Created at: {new Date(thread.createdAt).toLocaleString()}</p>
-      <p>Reply count: {thread.replyCount}</p>
-      <p>Upvotes: {thread.threadUpvotes}</p>
-      <p>Downvotes: {thread.threadDownvotes}</p>
-      <p>Net votes: {thread.threadUpvotes - thread.threadDownvotes}</p>
-      <h2>Replies:</h2>
-      {thread.replies.length > 0 ? (
-        <ul>
-          {thread.replies.map((reply, index) => (
-            <li key={index}>{reply}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No replies yet.</p>
-      )}
-    </div>
+    <main className="flex flex-col items-center justify-start min-h-screen p-10 bg-gray-100">
+      <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">
+        Back to Home
+      </Link>
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
+        <div className="p-10 border-b flex flex-col">
+          <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
+          <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
+          {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
+          <p className="mb-2">Replies: {thread.replyCount}</p>
+          <p className="text-sm text-gray-400 mt-auto mb-4">Date: {new Date(thread.createdAt).toLocaleString()}</p>
+          <div className="flex items-center justify-center space-x-4">
+            <span className="text-green-500">{thread.threadUpvotes}</span>
+            <span className="text-red-500">{thread.threadDownvotes}</span>
+          </div>
+        </div>
+      </div>
+    </main>
   );
-};
-
-export default ThreadPage;
+}
