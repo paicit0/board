@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <main>
       <div className="flex-grow text-center p-10">
-        <Link className='bg-green-500 w-fit text-sm text-white py-5 px-5 rounded-md mt-2' href="/createThread">+</Link>
+        <Link className='bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mt-2' href="/createThread">Submit Thread</Link>
         <div className="flex justify-center my-10">
           <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4">
             {threads.map((thread) => (
