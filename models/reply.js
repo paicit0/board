@@ -15,15 +15,6 @@ const replySchema = new Schema(
             ref: 'Reply', 
             default: null
         }],
-        replyUpvotes: {
-            type: Number,
-            default: 0
-        },
-        replyDownvotes: {
-            type: Number,
-            default: 0
-        }
-        
 
     },
     { timestamps: true }

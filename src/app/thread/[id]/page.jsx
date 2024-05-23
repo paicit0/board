@@ -56,10 +56,6 @@ export default function ThreadPage() {
           {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
           <p className="mb-2">Replies: {thread.replyCount}</p>
           <p className="text-sm text-gray-400 mt-auto mb-4">Date: {new Date(thread.createdAt).toLocaleString()}</p>
-          <div className="flex items-center justify-center space-x-4">
-            <span className="text-green-500">{thread.threadUpvotes}</span>
-            <span className="text-red-500">{thread.threadDownvotes}</span>
-          </div>
         </div>
       </div>
     </main>

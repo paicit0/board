@@ -32,8 +32,6 @@ export async function POST(req) {
       threadContent,
       createdAt: new Date(),
       replyCount: 0,
-      threadUpvotes: 0,
-      threadDownvotes: 0,
     });
 
     await newThread.save();

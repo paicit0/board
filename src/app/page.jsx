@@ -40,10 +40,6 @@ export default function Home() {
                 </Link>
                 <p className="text-gray-600 break-words line-clamp-6">{thread.threadContent}</p>
                 <p className="text-sm text-gray-400 mt-auto">Date: {new Date(thread.createdAt).toLocaleString()}</p>
-                <div className="flex items-center justify-center">
-                  <span className="text-green-500">{thread.threadUpvotes}</span>
-                  <span className="text-red-500 ml-4">{thread.threadDownvotes}</span>
-                </div>
               </div>
             ))}
           </div>

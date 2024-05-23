@@ -30,14 +30,6 @@ const threadSchema = new Schema(
         replyCount: {
             type: Number,
             default: 0
-        },
-        threadUpvotes: {
-            type: Number,
-            default: 0
-        },
-        threadDownvotes: {
-            type: Number,
-            default: 0
         }
         
     },
