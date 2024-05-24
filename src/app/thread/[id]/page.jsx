@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Reply from "@/components/Reply";
+
 
 export default function ThreadPage() {
   const { id } = useParams();
@@ -57,6 +59,7 @@ export default function ThreadPage() {
           <p className="mb-2">Replies: {thread.replyCount}</p>
           <p className="text-sm text-gray-400 mt-auto mb-4">Date: {new Date(thread.createdAt).toLocaleString()}</p>
         </div>
+        <Reply />
       </div>
     </main>
 

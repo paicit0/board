@@ -2,6 +2,11 @@ import mongoose, { Schema } from "mongoose";
 
 const replySchema = new Schema(
     {
+        replyId: {
+        type: Number,
+        required: true,
+        unique: true
+        },
         content: {
             type: String,
             required: true
@@ -19,10 +24,6 @@ const replySchema = new Schema(
     },
     { timestamps: true }
 );
-
-replySchema.virtual('replyNetVotes').get(function() {
-    return this.replyUpvotes - this.replyDownvotes;
-});
 
 const Reply = mongoose.models.Reply || mongoose.model("Reply", replySchema);
 export default Reply;
