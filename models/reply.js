@@ -7,7 +7,7 @@ const replySchema = new Schema(
         required: true,
         unique: true
         },
-        content: {
+        replyContent: {
             type: String,
             required: true
         },

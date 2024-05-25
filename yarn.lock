@@ -1271,7 +1271,7 @@ async-retry@^1.3.3:
   dependencies:
     retry "0.13.1"
 
-async@^3.2.0:
+async@^3.2.0, async@^3.2.5:
   version "3.2.5"
   resolved "https://registry.npmjs.org/async/-/async-3.2.5.tgz"
   integrity sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==
@@ -3723,7 +3723,15 @@ mongodb@6.5.0:
     bson "^6.4.0"
     mongodb-connection-string-url "^3.0.0"
 
-mongoose@^8.3.4:
+mongoose-sequence@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/mongoose-sequence/-/mongoose-sequence-6.0.1.tgz"
+  integrity sha512-uXnLCW9pu2V49Xw8BmdXdeRugd2mv+ntu3nT2Bbm33pNRmmvHE2GKA+8BASKoQt960McLX4VL78wkb492f6MoQ==
+  dependencies:
+    async "^3.2.5"
+    lodash "^4.17.21"
+
+mongoose@^8.3.4, mongoose@>=5:
   version "8.3.4"
   resolved "https://registry.npmjs.org/mongoose/-/mongoose-8.3.4.tgz"
   integrity sha512-ckBaBzKgtWgCalW/LPkcBsR3wKCOYEJ9jLFPmYCYV7TLStpETY757ELx8/1stL11+6HxLLVffawBffXzd0Y7YA==
