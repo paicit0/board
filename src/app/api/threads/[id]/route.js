@@ -1,24 +1,21 @@
+import { NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../../../lib/mongodb';
 import Thread from '../../../../../models/thread';
 
-export const GET = async (req, { params }) => {
-    const { id } = params;
-
-    console.log('Received ID:', id);
-
+export async function GET(req, { params }) {
     try {
-        await connectMongoDB();
-
-        const thread = await Thread.findOne({ threadId: id });
-        console.log('Fetched Thread:', thread);
-
-        if (!thread) {
-            return new Response(JSON.stringify({ success: false, message: 'Thread not found' }), { status: 404 });
-        }
-
-        return new Response(JSON.stringify({ success: true, data: thread }), { status: 200 });
+      await connectMongoDB();
+  
+      const threadId = params.id;
+      const thread = await Thread.findOne({ threadId: threadId }).populate('replies').exec();
+  
+      if (!thread) {
+        return NextResponse.json({ success: false, message: 'Thread not found' }, { status: 404 });
+      }
+  
+      return NextResponse.json({ success: true, data: thread }, { status: 200 });
     } catch (error) {
-        console.error('Error fetching thread:', error); 
-        return new Response(JSON.stringify({ success: false, message: 'Error fetching thread', error: error.message }), { status: 500 });
+      console.error('Error fetching thread:', error);
+      return NextResponse.json({ success: false, message: 'Error fetching thread' }, { status: 500 });
     }
-};
+  }

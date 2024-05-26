@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Reply from "@/components/Reply";
 
-
 export default function ThreadPage() {
   const { id } = useParams();
   const [thread, setThread] = useState(null);
@@ -59,9 +58,25 @@ export default function ThreadPage() {
           <p className="mb-2">Replies: {thread.replyCount}</p>
           <p className="text-sm text-gray-400 mt-auto mb-4">Date: {new Date(thread.createdAt).toLocaleString()}</p>
         </div>
-        <Reply />
+        <div className="p-10">
+          <h3 className="text-2xl font-bold mb-4">Replies</h3>
+          {thread.replies && thread.replies.length > 0 ? (
+            <ul className="space-y-4">
+              {thread.replies.map((reply) => (
+                <li key={reply.replyId} className="p-4 bg-gray-200 rounded-md">
+                  <p className="text-gray-800">{reply.replyContent}</p>
+                  <p className="text-sm text-gray-600 mt-2">
+                    Date: {reply.createdAt ? new Date(reply.createdAt).toLocaleString() : 'Invalid Date'}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No replies yet.</p>
+          )}
+        </div>
+        <Reply threadId={thread.threadId} />
       </div>
     </main>
-
   );
 }

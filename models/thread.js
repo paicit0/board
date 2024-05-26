@@ -24,7 +24,7 @@ const threadSchema = new Schema(
             default: Date.now
         },
         replies: [{
-            type: Array, 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Reply'
         }],
         replyCount: {
@@ -35,10 +35,6 @@ const threadSchema = new Schema(
     },
     { timestamps: true }
 );
-
-threadSchema.virtual('threadNetVotes').get(function() {
-    return this.threadUpvotes - this.threadDownvotes;
-});
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
 export default Thread;

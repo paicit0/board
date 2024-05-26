@@ -16,26 +16,33 @@ async function getNextSequenceValue(sequenceName) {
 
 export async function POST(req) {
   try {
-    const { replyContent, parentReply } = await req.json();
+    const { replyContent, threadId } = await req.json();
 
-    if (!replyContent) {
-      return NextResponse.json({ message: "Reply content is required." }, { status: 400 });
+    if (!replyContent || !threadId) {
+      return NextResponse.json({ message: "Reply content and thread ID are required." }, { status: 400 });
     }
 
     await connectMongoDB();
 
     const replyId = await getNextSequenceValue('threadId');
-    console.log('Generated threadId:', replyId); 
+    console.log('Generated threadId:', threadId); 
 
     const newReply = new Reply({
       replyId,
+      threadId,
       replyContent,
-      createdAt: new Date(),
-      parentReply
+      createdAt: new Date()
     });
 
     await newReply.save();
     console.log('New Reply:', newReply);
+
+    await Thread.findOneAndUpdate(
+      { threadId: threadId },
+      { $push: { replies: newReply._id }, $inc: { replyCount: 1 } },
+      { new: true }
+    );
+
     return NextResponse.json({ message: "Reply Submitted.", replyId }, { status: 201 });
   } catch (error) {
     console.error("Error submitting reply:", error);

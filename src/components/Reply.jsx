@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-const handleSubmit = async (e, reply, setReply, setMessage) => {
+const handleSubmit = async (e, reply, setReply, setMessage, threadId) => {
     e.preventDefault();
     console.log('Reply submitted:', reply);
+    console.log('Thread ID:', threadId);
 
     try {
         const response = await fetch('/api/createReply', {
@@ -10,7 +11,7 @@ const handleSubmit = async (e, reply, setReply, setMessage) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ replyContent: reply })
+            body: JSON.stringify({ replyContent: reply, threadId: threadId })
         });
 
         if (!response.ok) {
@@ -26,13 +27,13 @@ const handleSubmit = async (e, reply, setReply, setMessage) => {
     }
 };
 
-function Reply() {
+function Reply({ threadId }) {
     const [reply, setReply] = useState('');
     const [message, setMessage] = useState('');
 
     return (
         <div>
-            <form onSubmit={(e) => handleSubmit(e, reply, setReply, setMessage)}>
+            <form onSubmit={(e) => handleSubmit(e, reply, setReply, setMessage, threadId)}>
                 <input
                     type="text"
                     className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2'
