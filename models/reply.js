@@ -3,24 +3,23 @@ import mongoose, { Schema } from "mongoose";
 const replySchema = new Schema(
     {
         replyId: {
-        type: Number,
-        required: true,
-        unique: true
+            type: Number,
+            required: true,
+            unique: true
         },
         replyContent: {
             type: String,
             required: true
         },
         createdAt: {
-            type:Date,
+            type: Date,
             default: Date.now
         },
         parentReply: [{
-            type: Array, 
-            ref: 'Reply', 
+            type: Schema.Types.ObjectId,
+            ref: 'Reply',
             default: null
         }],
-
     },
     { timestamps: true }
 );

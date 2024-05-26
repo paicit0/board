@@ -37,11 +37,13 @@ export async function POST(req) {
     await newReply.save();
     console.log('New Reply:', newReply);
 
-    await Thread.findOneAndUpdate(
+    const updatedThread = await Thread.findOneAndUpdate(
       { threadId: threadId },
       { $push: { replies: newReply._id }, $inc: { replyCount: 1 } },
       { new: true }
     );
+
+    console.log('Updated Thread:', updatedThread);
 
     return NextResponse.json({ message: "Reply Submitted.", replyId }, { status: 201 });
   } catch (error) {

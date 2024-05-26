@@ -18,6 +18,8 @@ export default function ThreadPage() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
+        
+        console.log(data); // Log the fetched data
 
         if (data.success) {
           setThread(data.data);
@@ -60,14 +62,12 @@ export default function ThreadPage() {
         </div>
         <div className="p-10">
           <h3 className="text-2xl font-bold mb-4">Replies</h3>
-          {thread.replies && thread.replies.length > 0 ? (
+          {thread.replies ? (
             <ul className="space-y-4">
               {thread.replies.map((reply) => (
-                <li key={reply.replyId} className="p-4 bg-gray-200 rounded-md">
+                <li key={reply._id} className="p-4 bg-gray-200 rounded-md">
+                  <p className="text-red-500">{reply.replyId}</p>
                   <p className="text-gray-800">{reply.replyContent}</p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    Date: {reply.createdAt ? new Date(reply.createdAt).toLocaleString() : 'Invalid Date'}
-                  </p>
                 </li>
               ))}
             </ul>
