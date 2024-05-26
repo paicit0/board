@@ -54,7 +54,7 @@ export default function ThreadPage() {
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
         <div className="p-10 border-b flex flex-col">
           <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
-          <p className="font-bold text-red-500">{thread.threadId}</p>
+          <p className="font-bold text-red-500">No. {thread.threadId}</p>
           <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
           {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
           <p className="mb-2">Replies: {thread.replyCount}</p>
@@ -66,8 +66,9 @@ export default function ThreadPage() {
             <ul className="space-y-4">
               {thread.replies.map((reply) => (
                 <li key={reply._id} className="p-4 bg-gray-200 rounded-md">
-                  <p className="text-red-500">{reply.replyId}</p>
+                  <p className="text-red-500">No. {reply.replyId}</p>
                   <p className="text-gray-800">{reply.replyContent}</p>
+                  <p className="text-gray-800">Date: {new Date(reply.createdAt).toLocaleString()}</p>
                 </li>
               ))}
             </ul>
