@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "api/**/*": {
+        "regions": ["hkg1", "syd1", "sin1"]
+      }
+    }
+  }
