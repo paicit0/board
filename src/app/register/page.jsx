@@ -108,7 +108,8 @@ function RegisterPage() {
               disabled={success}
             >
               {success || "Register"}
-            </button>          </form>
+            </button>          
+          </form>
           {!success && <Link href="/login" className='hover:underline font-semibold'>Login</Link>}
         </div>
       </div>

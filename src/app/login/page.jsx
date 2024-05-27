@@ -73,15 +73,13 @@ function LoginPage() {
 
             <button
               type="submit"
-              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"
-                }`}
+              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"}`}
+              disabled={success}
             >
               {success || "Sign In"}
             </button>
           </form>
-
           {!success && <Link href="/register" className="hover:underline text-right font-semibold">Register</Link>}
-
         </div>
       </div>
     </div>
