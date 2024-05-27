@@ -5,10 +5,14 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Reply from "@/components/Reply";
 
+
+
 export default function ThreadPage() {
   const { id } = useParams();
   const [thread, setThread] = useState(null);
   const [error, setError] = useState(null);
+
+
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -18,7 +22,7 @@ export default function ThreadPage() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        
+
         console.log(data); // Log the fetched data
 
         if (data.success) {
@@ -48,6 +52,14 @@ export default function ThreadPage() {
     );
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    const formattedTime = date.toLocaleTimeString('en-US');
+    return `${formattedDate} ${formattedTime}`;
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
@@ -59,7 +71,7 @@ export default function ThreadPage() {
             <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
             {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
             <p className="mb-2 text-right">Replies: {thread.replyCount}</p>
-            <p className="text-sm text-gray-400 mt-auto mb-4 text-right">Date: {new Date(thread.createdAt).toLocaleString()}</p>
+            <p className="text-sm text-gray-400 mt-auto mb-4 text-right">{formatDate(thread.createdAt)}</p>
           </div>
           <div className="p-10">
             <h3 className="text-2xl font-bold mb-4">Replies</h3>
@@ -69,7 +81,7 @@ export default function ThreadPage() {
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
                     <p className="text-gray-800">{reply.replyContent}</p>
-                    <p className="text-gray-800 text-right">Date: {new Date(reply.createdAt).toLocaleString()}</p>
+                    <p className="text-gray-800 text-right">{formatDate(reply.createdAt)}</p>
                   </li>
                 ))}
               </ul>
