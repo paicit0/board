@@ -25,6 +25,15 @@ export default function Home() {
     fetchThreads();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toLocaleDateString('en-US', { weekday: 'short' }); // "Mon"
+    const datePart = date.toLocaleDateString('en-US'); // "5/27/2024"
+    const timePart = date.toLocaleTimeString('en-US'); // "5:33:06 PM"
+    return `${day}, ${datePart} ${timePart}`; // "Mon, 5/27/2024 5:33:06 PM"
+  };
+  
+
   return (
     <main>
       <div className="flex-grow text-center p-10">
@@ -38,8 +47,8 @@ export default function Home() {
                 <Link href={`/thread/${thread.threadId}`}>
                   <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
                 </Link>
-                <p className="text-gray-600 break-words line-clamp-6">{thread.threadContent}</p>
-                <p className="text-sm text-gray-400 mt-auto">Date: {new Date(thread.createdAt).toLocaleString()}</p>
+                <p className="text-black break-words line-clamp-6">{thread.threadContent}</p>
+                <p className="text-sm text-black text-center mt-auto pt-4 ">{formatDate(thread.createdAt)}</p>
               </div>
             ))}
           </div>

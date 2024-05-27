@@ -65,23 +65,25 @@ export default function ThreadPage() {
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
         <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">Back to Home</Link>
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
-          <div className="p-10 border-b flex flex-col">
-            <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
-            <p className="font-bold text-red-500">No. {thread.threadId}</p>
-            <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
+          <div className="p-8 border-b flex flex-col">
+            <div className="flex items-center justify-between">
+              <p className="text-red-500">No. {thread.threadId}</p>
+              <p className="text-black text-right">{formatDate(thread.createdAt)}</p>
+            </div>
+            <h2 className="text-3xl break-words">{thread.title}</h2>
+            <p className="text-black break-words mb-4">{thread.threadContent}</p>
             {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
             <p className="mb-2 text-right">Replies: {thread.replyCount}</p>
-            <p className="text-sm text-gray-400 mt-auto mb-4 text-right">{formatDate(thread.createdAt)}</p>
           </div>
-          <div className="p-10">
-            <h3 className="text-2xl font-bold mb-4">Replies</h3>
+          <div className="w-full p-6 pt-2"> // hey
+            <h3 className="text-2xl mb-4">Replies</h3>
             {thread.replies ? (
               <ul className="space-y-4">
                 {thread.replies.map((reply) => (
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
-                    <p className="text-gray-800">{reply.replyContent}</p>
-                    <p className="text-gray-800 text-right">{formatDate(reply.createdAt)}</p>
+                    <p className="text-black">{reply.replyContent}</p>
+                    <p className="text-black text-right">{formatDate(reply.createdAt)}</p>
                   </li>
                 ))}
               </ul>

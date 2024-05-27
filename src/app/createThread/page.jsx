@@ -21,8 +21,8 @@ function CreateThreadPage() {
       return;
     }
     
-    if (title.length > 100) {
-      setError(`Title is too long. Maximum length is 100 characters. The current title length is ${title.length} characters.`);
+    if (title.length > 200) {
+      setError(`Title is too long. Maximum length is 200 characters. The current title length is ${title.length} characters.`);
       return;
     }
 
@@ -31,8 +31,8 @@ function CreateThreadPage() {
       return;
     }
 
-    if (threadContent.length > 500) {
-      setError(`Content is too long. Maximum length is 500 characters. The current content length is ${threadContent.length} characters.`);
+    if (threadContent.length > 1000) {
+      setError(`Content is too long. Maximum length is 1000 characters. The current content length is ${threadContent.length} characters.`);
       return;
     }
 
