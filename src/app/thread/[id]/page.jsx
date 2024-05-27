@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import Reply from "@/components/Reply";
 
 
@@ -63,7 +62,6 @@ export default function ThreadPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
-        <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">Back to Home</Link>
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
           <div className="p-8 border-b flex flex-col">
             <div className="flex items-center justify-between">
