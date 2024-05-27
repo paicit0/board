@@ -8,7 +8,7 @@ const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="h-12 text-white bg-red-700 p-4 flex items-center justify-between border-b-2 border-b-red-500 md:h-20 lg:px-20 xl:px-40">
+    <nav className="text-white bg-sky-600 p-4 flex items-center justify-between border-b-2  md:h-16 lg:px-20 xl:px-40">
       {/* LEFT LINKS */}
       <div className="hidden md:flex gap-4 flex-1">
         <Link href="/">Home</Link>

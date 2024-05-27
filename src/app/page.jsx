@@ -42,7 +42,7 @@ export default function Home() {
         <div className="flex justify-center my-10">
           <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4">
             {threads.map((thread) => (
-              <div key={thread.threadId} className="p-5 border-b flex flex-col">
+              <div key={thread.threadId} className="p-5 border flex flex-col"> 
                 <p>Reply: {thread.replyCount}</p>
                 <Link href={`/thread/${thread.threadId}`}>
                   <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
