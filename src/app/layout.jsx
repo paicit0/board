@@ -7,22 +7,22 @@ import Footer from "@/components/Footer";
 import Notification from "@/components/Notification";
 import { AuthProvider } from "./Providers";
 
-  const Layout = ({ children }) => {
-    return (
-      <html>
-        <head>
-          <title>Board</title>
-          <meta name="description" content="Welcome to the board." />
-        </head>
-        <body>
-          <AuthProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </AuthProvider>
-        </body>
-      </html>
-    );
-  };
-  
-  export default Layout;
+const Layout = ({ children }) => {
+  return (
+    <html>
+      <head>
+        <title>Board</title>
+        <meta name="description" content="Welcome to the board." />
+      </head>
+      <body className="flex flex-col min-h-screen">
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </AuthProvider>
+      </body>
+    </html>
+  );
+};
+
+export default Layout;

@@ -49,35 +49,37 @@ export default function ThreadPage() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-start min-h-screen p-10 bg-gray-100">
-      <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">Back to Home</Link>
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
-        <div className="p-10 border-b flex flex-col">
-          <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
-          <p className="font-bold text-red-500">No. {thread.threadId}</p>
-          <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
-          {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
-          <p className="mb-2">Replies: {thread.replyCount}</p>
-          <p className="text-sm text-gray-400 mt-auto mb-4">Date: {new Date(thread.createdAt).toLocaleString()}</p>
+    <div className="flex flex-col min-h-screen">
+      <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
+        <Link className="bg-green-500 w-fit text-sm text-white py-3 px-5 rounded-md mb-10" href="/">Back to Home</Link>
+        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
+          <div className="p-10 border-b flex flex-col">
+            <h2 className="text-3xl font-bold break-words mb-4">{thread.title}</h2>
+            <p className="font-bold text-red-500">No. {thread.threadId}</p>
+            <p className="text-gray-600 break-words mb-4">{thread.threadContent}</p>
+            {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
+            <p className="mb-2 text-right">Replies: {thread.replyCount}</p>
+            <p className="text-sm text-gray-400 mt-auto mb-4 text-right">Date: {new Date(thread.createdAt).toLocaleString()}</p>
+          </div>
+          <div className="p-10">
+            <h3 className="text-2xl font-bold mb-4">Replies</h3>
+            {thread.replies ? (
+              <ul className="space-y-4">
+                {thread.replies.map((reply) => (
+                  <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
+                    <p className="text-red-500">No. {reply.replyId}</p>
+                    <p className="text-gray-800">{reply.replyContent}</p>
+                    <p className="text-gray-800 text-right">Date: {new Date(reply.createdAt).toLocaleString()}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No replies yet.</p>
+            )}
+          </div>
+          <Reply threadId={thread.threadId} />
         </div>
-        <div className="p-10">
-          <h3 className="text-2xl font-bold mb-4">Replies</h3>
-          {thread.replies ? (
-            <ul className="space-y-4">
-              {thread.replies.map((reply) => (
-                <li key={reply._id} className="p-4 bg-gray-200 rounded-md">
-                  <p className="text-red-500">No. {reply.replyId}</p>
-                  <p className="text-gray-800">{reply.replyContent}</p>
-                  <p className="text-gray-800">Date: {new Date(reply.createdAt).toLocaleString()}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No replies yet.</p>
-          )}
-        </div>
-        <Reply threadId={thread.threadId} />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
