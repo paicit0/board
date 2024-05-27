@@ -75,7 +75,7 @@ export default function ThreadPage() {
             {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
             <p className="mb-2 text-right">Replies: {thread.replyCount}</p>
           </div>
-          <div className="w-full p-6 pt-2"> // hey
+          <div className="w-full p-6 pt-2">
             <h3 className="text-2xl mb-4">Replies</h3>
             {thread.replies ? (
               <ul className="space-y-4">
