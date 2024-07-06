@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem; /* For rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* For subtle shadow */
+}

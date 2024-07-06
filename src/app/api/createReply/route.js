@@ -31,7 +31,8 @@ export async function POST(req) {
       replyId,
       threadId,
       replyContent,
-      createdAt: new Date()
+      createdAt: new Date(),
+      replyFileUrl,
     });
 
     await newReply.save();

@@ -43,10 +43,18 @@ export default function Home() {
           <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4">
             {threads.map((thread) => (
               <div key={thread.threadId} className="p-5 border flex flex-col"> 
+                {thread.threadFileUrl && (
+                    <img 
+                      src={thread.threadFileUrl} 
+                      alt="Thread Image" 
+                      className="my-2 max-w-full h-auto rounded-lg shadow-lg"
+                    />
+                )}
                 <p>Reply: {thread.replyCount}</p>
                 <Link href={`/thread/${thread.threadId}`}>
                   <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
                 </Link>
+
                 <p className="text-black break-words line-clamp-6">{thread.threadContent}</p>
                 <p className="text-sm text-black text-center mt-auto pt-4 ">{formatDate(thread.createdAt)}</p>
               </div>

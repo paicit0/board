@@ -59,6 +59,11 @@ function Reply({ threadId }) {
                 <div className="flex flex-col">
                     {error && <p className="text-red-500">{error}</p>}
                     <input
+                    type="file"
+                    //onChange={}
+                    className="w-full bg-gray-200 border py-2 px-3 rounded text-lg mb-2"
+                    />
+                    <input
                         type="text"
                         className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2'
                         placeholder='Enter your reply'

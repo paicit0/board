@@ -9,13 +9,13 @@ async function getNextSequenceValue(sequenceName) {
     { $inc: { seq: 1 } },
     { new: true, upsert: true }
   );
-  console.log('Counter after update:', counter); 
+  console.log('Counter after update:', counter);
   return counter.seq;
 }
 
 export async function POST(req) {
   try {
-    const { title, threadContent } = await req.json();
+    const { title, threadContent, threadFileUrl } = await req.json(); // Include threadFileUrl here
 
     if (!title || !threadContent) {
       return NextResponse.json({ message: "Title and content are required." }, { status: 400 });
@@ -24,18 +24,19 @@ export async function POST(req) {
     await connectMongoDB();
 
     const threadId = await getNextSequenceValue('threadId');
-    console.log('Generated threadId:', threadId); 
+    console.log('Generated threadId:', threadId);
 
     const newThread = new Thread({
       threadId,
       title,
       threadContent,
       createdAt: new Date(),
-      replyCount: 0
+      replyCount: 0,
+      threadFileUrl, 
     });
 
     await newThread.save();
-    console.log('New Thread:', newThread); 
+    console.log('New Thread:', newThread);
     return NextResponse.json({ message: "Thread Submitted.", threadId }, { status: 201 });
   } catch (error) {
     console.error("Error submitting thread:", error);

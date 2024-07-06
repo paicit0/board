@@ -4,14 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Reply from "@/components/Reply";
 
-
-
 export default function ThreadPage() {
   const { id } = useParams();
   const [thread, setThread] = useState(null);
   const [error, setError] = useState(null);
-
-
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -70,9 +66,18 @@ export default function ThreadPage() {
             </div>
             <h2 className="text-3xl break-words">{thread.title}</h2>
             <p className="text-black break-words mb-4">{thread.threadContent}</p>
-            {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 max-w-full h-auto" />}
+            {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 image-container" />}
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
+          {thread.threadFileUrl && (
+            <div className="image-container my-2">
+              <img 
+                src={thread.threadFileUrl} 
+                alt="Thread Image" 
+                className="max-w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          )}
           <div className="w-full p-6 pt-2">
             <h3 className="text-2xl mb-4">Reply</h3>
             {thread.replies ? (

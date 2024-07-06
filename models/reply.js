@@ -20,6 +20,9 @@ const replySchema = new Schema(
             ref: 'Reply',
             default: null
         }],
+        replyFileUrl: {
+            type: String
+        },
     },
     { timestamps: true }
 );
