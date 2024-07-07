@@ -98,7 +98,7 @@ export default function ThreadPage() {
           {thread.threadFileUrl && (
             <div className="image-container my-2">
               <img
-                src={thread.threadFileUrl}
+                src={thread.threadThumbnailFileUrl}
                 alt="Thread Image"
                 className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
                 onClick={() => toggleImageSize(thread.threadFileUrl)}
@@ -115,7 +115,7 @@ export default function ThreadPage() {
                     {reply.replyFileUrl && (
                       <div className="image-container my-2">
                         <img
-                          src={reply.replyFileUrl}
+                          src={reply.replyThumbnailFileUrl}
                           alt="Reply Image"
                           className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
                           onClick={() => toggleImageSize(reply.replyFileUrl)}

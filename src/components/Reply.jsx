@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 
 const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting) => {
     e.preventDefault();
-    console.log('Reply submitted:', reply);
-    console.log('Thread ID:', threadId);
 
     if (reply.length === 0) {
         setError("Empty Reply");
@@ -35,12 +33,30 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
             });
 
             if (!uploadResponse.ok) {
-                throw new Error('File upload failed');
+                console.error('Failed to get upload URL:', uploadResponse.statusText);
+                setError('File upload failed');
+                setSubmitting(false);
+                return;
             }
 
             const uploadData = await uploadResponse.json();
             replyFileUrl = uploadData.uploadUrl.split('?')[0];
             replyThumbnailFileUrl = uploadData.thumbnailUrl;
+
+            const uploadRes = await fetch(uploadData.uploadUrl, {
+                method: 'PUT',
+                body: file,
+                headers: {
+                    'Content-Type': file.type,
+                },
+            });
+
+            if (!uploadRes.ok) {
+                console.error('Failed to upload file to S3:', uploadRes.statusText);
+                setError('Failed to upload file to S3');
+                setSubmitting(false);
+                return;
+            }
 
         } catch (error) {
             console.error('Error uploading file:', error);
@@ -54,18 +70,21 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
         const response = await fetch('/api/createReply', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ replyContent: reply, threadId: threadId, replyFileUrl, replyThumbnailFileUrl })
+            body: JSON.stringify({ replyContent: reply, threadId, replyFileUrl, replyThumbnailFileUrl }),
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            const errorData = await response.json();
+            setError(errorData.message || 'Error creating reply');
+            setSubmitting(false);
+            return;
         }
 
         const data = await response.json();
         setReply('');
-        setMessage('Reply submitted successfully.');
+        setMessage('');
         setSuccess(true);
         setError('');
         setTimeout(() => {
@@ -127,7 +146,7 @@ function Reply({ threadId }) {
                         className={`bg-blue-500 text-white py-2 px-4 rounded mb-4 ${success ? 'bg-green-500' : submitting ? 'bg-green-500' : 'hover:bg-blue-600'}`}
                         disabled={submitting || success} // Disable button if submitting or success
                     >
-                        {success ? 'Submiting reply...' : 'Submit'}
+                        {success ? 'Submitting reply...' : 'Submit'}
                     </button>
                 </div>
             </form>
