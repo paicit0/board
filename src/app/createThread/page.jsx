@@ -26,22 +26,30 @@ function CreateThreadPage() {
 
     try {
       const uniqueFileName = `${Date.now()}`;
-      // Step 1: Get the pre-signed URL
+      console.log('Unique File Name:', uniqueFileName); // Log the unique file name
 
+      const fileBase64 = await fileToBase64(selectedFile);
+      console.log('File Base64 Length:', fileBase64.length); // Log the length of the base64 string
+
+      // Step 1: Get the pre-signed URL
       const res = await fetch('/api/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fileName: uniqueFileName, contentType: selectedFile.type, imageBase64: await fileToBase64(selectedFile) }),
+        body: JSON.stringify({ fileName: uniqueFileName, contentType: selectedFile.type, imageBase64: fileBase64 }),
       });
 
       if (!res.ok) {
         console.error('Failed to get upload URL:', res.statusText);
+        const errorText = await res.text();
+        console.error('Error Text:', errorText); // Log the response text
         return { fileUrl: null, thumbnailUrl: null };
       }
 
       const { uploadUrl, thumbnailUrl } = await res.json();
+      console.log('Upload URL:', uploadUrl); // Log the upload URL
+      console.log('Thumbnail URL:', thumbnailUrl); // Log the thumbnail URL
 
       // Step 2: Upload the file to S3 using the pre-signed URL
       const uploadRes = await fetch(uploadUrl, {
@@ -54,6 +62,8 @@ function CreateThreadPage() {
 
       if (!uploadRes.ok) {
         console.error('Failed to upload file to S3:', uploadRes.statusText);
+        const errorText = await uploadRes.text();
+        console.error('Error Text:', errorText); // Log the response text
         return { fileUrl: null, thumbnailUrl: null };
       }
 
