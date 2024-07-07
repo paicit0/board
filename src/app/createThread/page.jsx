@@ -25,13 +25,15 @@ function CreateThreadPage() {
     }
 
     try {
+      const uniqueFileName = `${Date.now()}`;
       // Step 1: Get the pre-signed URL
+
       const res = await fetch('/api/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fileName: selectedFile.name, contentType: selectedFile.type, imageBase64: await fileToBase64(selectedFile) }),
+        body: JSON.stringify({ fileName: uniqueFileName, contentType: selectedFile.type, imageBase64: await fileToBase64(selectedFile) }),
       });
 
       if (!res.ok) {

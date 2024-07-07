@@ -28,10 +28,17 @@ export default function Home() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
+  
+    // Extract date parts
     const day = date.toLocaleDateString('en-US', { weekday: 'short' });
-    const datePart = date.toLocaleDateString('en-US');
-    const timePart = date.toLocaleTimeString('en-US');
-    return `${day}, ${datePart} ${timePart}`;
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const dayOfMonth = String(date.getDate()).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2); // Last two digits of the year
+  
+    // Extract time parts
+    const timePart = date.toLocaleTimeString('en-US', { hour12: false });
+  
+    return `${month}/${dayOfMonth}/${year}(${day})\n${timePart}`;
   };
 
   const getRelativeTime = (dateString) => {

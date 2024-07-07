@@ -22,6 +22,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
 
     if (file) {
         try {
+            const uniqueFileName = `${Date.now()}`;
             const fileBase64 = await fileToBase64(file);
 
             const uploadResponse = await fetch('/api/upload', {
@@ -29,7 +30,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ fileName: file.name, contentType: file.type, imageBase64: fileBase64 }),
+                body: JSON.stringify({ fileName: uniqueFileName, contentType: file.type, imageBase64: fileBase64 }),
             });
 
             if (!uploadResponse.ok) {

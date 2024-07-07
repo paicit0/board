@@ -11,6 +11,8 @@ export default function ThreadPage() {
   const [thread, setThread] = useState(null);
   const [error, setError] = useState(null);
   const [enlargedImages, setEnlargedImages] = useState({});
+  const [hoveredImageSrc, setHoveredImageSrc] = useState(null);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -45,6 +47,18 @@ export default function ThreadPage() {
     }));
   };
 
+  const handleMouseEnter = (src) => {
+    setHoveredImageSrc(src);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredImageSrc(null);
+  };
+
+  const handleMouseMove = (e) => {
+    setCursorPosition({ x: e.clientX, y: e.clientY });
+  };
+
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -59,10 +73,17 @@ export default function ThreadPage() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
-    const formattedDate = date.toLocaleDateString('en-US', options);
-    const formattedTime = date.toLocaleTimeString('en-US');
-    return `${formattedDate} ${formattedTime}`;
+  
+    // Extract date parts
+    const day = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const dayOfMonth = String(date.getDate()).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2); // Last two digits of the year
+  
+    // Extract time parts
+    const timePart = date.toLocaleTimeString('en-US', { hour12: false });
+  
+    return `${month}/${dayOfMonth}/${year}(${day}) ${timePart}`;
   };
 
   const getRelativeTime = (dateString) => {
@@ -70,7 +91,7 @@ export default function ThreadPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen" onMouseMove={handleMouseMove}>
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
           <div className="p-8 border-b flex flex-col">
@@ -91,19 +112,21 @@ export default function ThreadPage() {
                 alt="Thread file"
                 className={`mb-4 image-container ${enlargedImages[thread.threadId] ? 'w-full h-full' : 'w-32 h-32'}`}
                 onClick={() => toggleImageSize(thread.threadId)}
+                onMouseEnter={() => handleMouseEnter(thread.file)}
+                onMouseLeave={handleMouseLeave}
               />
             )}
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
           {thread.threadFileUrl && (
-            <div className="image-container my-2">
-              <img
-                src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
-                alt="Thread Image"
-                className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
-                onClick={() => toggleImageSize(thread.threadFileUrl)}
-              />
-            </div>
+            <img
+              src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
+              alt="Thread Image"
+              className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+              onClick={() => toggleImageSize(thread.threadFileUrl)}
+              onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)}
+              onMouseLeave={handleMouseLeave}
+            />
           )}
           <div className="w-full p-6 pt-2">
             <h3 className="text-2xl mb-4">Reply</h3>
@@ -113,14 +136,14 @@ export default function ThreadPage() {
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
                     {reply.replyFileUrl && (
-                      <div className="image-container my-2">
-                        <img
-                          src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
-                          alt="Reply Image"
-                          className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
-                          onClick={() => toggleImageSize(reply.replyFileUrl)}
-                        />
-                      </div>
+                      <img
+                        src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
+                        alt="Reply Image"
+                        className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                        onClick={() => toggleImageSize(reply.replyFileUrl)}
+                        onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
+                        onMouseLeave={handleMouseLeave}
+                      />
                     )}
                     <p className="text-black mb-4">{reply.replyContent}</p>
                     <p id={`reply-date-${reply._id}`} className="text-black text-right text-sm" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
@@ -139,6 +162,26 @@ export default function ThreadPage() {
           <Reply threadId={thread.threadId} />
         </div>
       </main>
+      {hoveredImageSrc && (
+        <div
+          className="fixed z-50"
+          style={{
+            left: `${cursorPosition.x + 20}px`,
+            top: `50%`,
+            transform: `translateY(-50%)`
+          }}
+        >
+          <img
+            src={hoveredImageSrc}
+            alt="Hovered Image"
+            className="object-contain"
+            style={{
+              maxHeight: '100vh', // Ensure it fills the screen height-wise
+              maxWidth: 'calc(100vw - 40px)', // Ensure it doesn't overflow the width of the viewport
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
