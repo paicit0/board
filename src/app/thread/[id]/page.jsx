@@ -170,18 +170,18 @@ export default function ThreadPage() {
             right: cursorPosition.x + 300 > window.innerWidth ? `${window.innerWidth - cursorPosition.x + 20}px` : 'auto',
             top: `50%`,
             transform: `translateY(-50%)`,
-            width: 'auto', // Fixed width
+            width: '400px', // Fixed width
             height: 'auto', // Auto height to maintain aspect ratio
             maxWidth: '100%', // Ensure it doesn't overflow the width of the viewport
             maxHeight: '100vh', // Ensure it doesn't overflow the height of the viewport
           }}
         >
-          <img
-            src={hoveredImageSrc}
-            alt="Hovered Image"
+          <img 
+            src={hoveredImageSrc} 
+            alt="Hovered Image" 
             className="object-contain"
             style={{
-              width: '800px', // Ensure it scales within the fixed size container
+              width: '100%', // Ensure it scales within the fixed size container
               height: 'auto', // Maintain aspect ratio
             }}
           />
