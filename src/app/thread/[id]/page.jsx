@@ -8,6 +8,7 @@ export default function ThreadPage() {
   const { id } = useParams();
   const [thread, setThread] = useState(null);
   const [error, setError] = useState(null);
+  const [enlargedImages, setEnlargedImages] = useState({});
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -34,6 +35,13 @@ export default function ThreadPage() {
       fetchThread();
     }
   }, [id]);
+
+  const toggleImageSize = (imageId) => {
+    setEnlargedImages((prev) => ({
+      ...prev,
+      [imageId]: !prev[imageId],
+    }));
+  };
 
   if (error) {
     return <p>Error: {error}</p>;
@@ -66,15 +74,23 @@ export default function ThreadPage() {
             </div>
             <h2 className="text-3xl break-words">{thread.title}</h2>
             <p className="text-black break-words mb-4">{thread.threadContent}</p>
-            {thread.file && <img src={thread.file} alt="Thread file" className="mb-4 image-container" />}
+            {thread.file && (
+              <img
+                src={thread.file}
+                alt="Thread file"
+                className={`mb-4 image-container ${enlargedImages[thread.threadId] ? 'w-full h-full' : 'w-32 h-32'}`}
+                onClick={() => toggleImageSize(thread.threadId)}
+              />
+            )}
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
           {thread.threadFileUrl && (
             <div className="image-container my-2">
-              <img 
-                src={thread.threadFileUrl} 
-                alt="Thread Image" 
-                className="max-w-full h-auto rounded-lg shadow-lg"
+              <img
+                src={thread.threadFileUrl}
+                alt="Thread Image"
+                className={`max-w-full h-auto rounded-lg shadow-lg ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                onClick={() => toggleImageSize(thread.threadFileUrl)}
               />
             </div>
           )}
@@ -87,10 +103,11 @@ export default function ThreadPage() {
                     <p className="text-red-500">No. {reply.replyId}</p>
                     {reply.replyFileUrl && (
                       <div className="image-container my-2">
-                        <img 
-                          src={reply.replyFileUrl} // Display reply image directly
-                          alt="Reply Image" 
-                          className="max-w-full h-auto rounded-lg shadow-lg"
+                        <img
+                          src={reply.replyFileUrl}
+                          alt="Reply Image"
+                          className={`max-w-full h-auto rounded-lg shadow-lg ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                          onClick={() => toggleImageSize(reply.replyFileUrl)}
                         />
                       </div>
                     )}

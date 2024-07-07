@@ -10,6 +10,7 @@ function CreateThreadPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [submitting, setSubmitting] = useState(false); // Add submitting state
 
   const router = useRouter();
 
@@ -73,23 +74,30 @@ function CreateThreadPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (submitting) return; // Prevent multiple submissions
+    setSubmitting(true); // Disable further submissions
+
     if (title.length === 0) {
       setError("Empty Title");
+      setSubmitting(false);
       return;
     }
 
     if (title.length > 200) {
       setError(`Title is too long. Maximum length is 200 characters. The current title length is ${title.length} characters.`);
+      setSubmitting(false);
       return;
     }
 
     if (threadContent.length === 0) {
       setError("Empty Content");
+      setSubmitting(false);
       return;
     }
 
     if (threadContent.length > 1000) {
       setError(`Content is too long. Maximum length is 1000 characters. The current content length is ${threadContent.length} characters.`);
+      setSubmitting(false);
       return;
     }
 
@@ -99,6 +107,7 @@ function CreateThreadPage() {
 
     if (!fileUrl && selectedFile) {
       setError("Failed to upload file.");
+      setSubmitting(false);
       return;
     }
 
@@ -125,9 +134,11 @@ function CreateThreadPage() {
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Error creating thread");
+        setSubmitting(false);
       }
     } catch (error) {
       setError("Error creating thread");
+      setSubmitting(false);
     }
   };
 
@@ -159,10 +170,10 @@ function CreateThreadPage() {
             />
             <button
               type="submit"
-              className={`w-full py-2 px-3 rounded text-lg my-2 ${success ? "bg-green-500 text-white" : "bg-green-500 hover:bg-green-600 text-white"}`}
-              disabled={success}
+              className={`bg-blue-500 text-white py-2 px-4 rounded mb-4 ${success ? 'bg-green-500' : submitting ? 'bg-green-500' : 'hover:bg-blue-600'}`}
+              disabled={submitting || success} // Disable button if submitting or success
             >
-              {success || "Submit"}
+              {success ? "Submitting thread..." : "Submit"}
             </button>
           </form>
           {!success && <Link href="/" className='hover:underline font-semibold'>Back</Link>}
