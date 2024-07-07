@@ -58,17 +58,17 @@ export default function Home() {
                     onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)}
                     onMouseLeave={handleMouseLeave}
                   >
+                  <Link href={`/thread/${thread.threadId}`}>
                     <img 
                       src={thread.threadThumbnailFileUrl} 
                       alt="Thread Thumbnail" 
                       className="my-2 max-w-full h-auto rounded-lg shadow-lg"
                     />
+                  </Link>
                   </div>
                 )}
                 <p>Reply: {thread.replyCount}</p>
-                <Link href={`/thread/${thread.threadId}`}>
-                  <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
-                </Link>
+                <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
                 <p className="text-black break-words line-clamp-6">{thread.threadContent}</p>
                 <p className="text-sm text-black text-center mt-auto pt-4">{formatDate(thread.createdAt)}</p>
               </div>

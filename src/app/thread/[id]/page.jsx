@@ -89,7 +89,7 @@ export default function ThreadPage() {
               <img
                 src={thread.threadFileUrl}
                 alt="Thread Image"
-                className={`max-w-full h-auto rounded-lg shadow-lg ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
                 onClick={() => toggleImageSize(thread.threadFileUrl)}
               />
             </div>
@@ -106,7 +106,7 @@ export default function ThreadPage() {
                         <img
                           src={reply.replyFileUrl}
                           alt="Reply Image"
-                          className={`max-w-full h-auto rounded-lg shadow-lg ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                          className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
                           onClick={() => toggleImageSize(reply.replyFileUrl)}
                         />
                       </div>
