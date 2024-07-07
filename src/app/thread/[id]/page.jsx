@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Reply from "@/components/Reply";
+import { Tooltip } from 'react-tooltip';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function ThreadPage() {
   const { id } = useParams();
@@ -63,6 +65,10 @@ export default function ThreadPage() {
     return `${formattedDate} ${formattedTime}`;
   };
 
+  const getRelativeTime = (dateString) => {
+    return formatDistanceToNow(new Date(dateString), { addSuffix: true });
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
@@ -70,7 +76,12 @@ export default function ThreadPage() {
           <div className="p-8 border-b flex flex-col">
             <div className="flex items-center justify-between">
               <p className="text-red-500">No. {thread.threadId}</p>
-              <p className="text-black text-right">{formatDate(thread.createdAt)}</p>
+              <p id={`thread-date-${thread.threadId}`} className="text-black text-right" data-tooltip-id={`tooltip-thread-date-${thread.threadId}`} style={{ display: 'inline-block' }}>
+                {formatDate(thread.createdAt)}
+              </p>
+              <Tooltip id={`tooltip-thread-date-${thread.threadId}`} clickable place="top">
+                {getRelativeTime(thread.createdAt)}
+              </Tooltip>
             </div>
             <h2 className="text-3xl break-words">{thread.title}</h2>
             <p className="text-black break-words mb-4">{thread.threadContent}</p>
@@ -111,8 +122,13 @@ export default function ThreadPage() {
                         />
                       </div>
                     )}
-                    <p className="text-black">{reply.replyContent}</p>
-                    <p className="text-black text-right">{formatDate(reply.createdAt)}</p>
+                    <p className="text-black mb-4">{reply.replyContent}</p>
+                    <p id={`reply-date-${reply._id}`} className="text-black text-right text-sm" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
+                      {formatDate(reply.createdAt)}
+                    </p>
+                    <Tooltip id={`tooltip-reply-date-${reply._id}`} clickable place="top">
+                      {getRelativeTime(reply.createdAt)}
+                    </Tooltip>
                   </li>
                 ))}
               </ul>

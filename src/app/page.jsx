@@ -3,6 +3,8 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Tooltip } from 'react-tooltip';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -30,6 +32,10 @@ export default function Home() {
     const datePart = date.toLocaleDateString('en-US');
     const timePart = date.toLocaleTimeString('en-US');
     return `${day}, ${datePart} ${timePart}`;
+  };
+
+  const getRelativeTime = (dateString) => {
+    return formatDistanceToNow(new Date(dateString), { addSuffix: true });
   };
 
   const handleMouseEnter = (src) => {
@@ -70,7 +76,12 @@ export default function Home() {
                 <p>Reply: {thread.replyCount}</p>
                 <h2 className="text-2xl font-bold break-words line-clamp-4">{thread.title}</h2>
                 <p className="text-black break-words line-clamp-6">{thread.threadContent}</p>
-                <p className="text-sm text-black text-center mt-auto pt-4">{formatDate(thread.createdAt)}</p>
+                <p id={`thread-date-${thread.threadId}`} className="text-sm text-black text-center mt-auto pt-4" data-tooltip-id={`tooltip-thread-date-${thread.threadId}`} style={{ display: 'inline-block' }}>
+                  {formatDate(thread.createdAt)}
+                </p>
+                <Tooltip id={`tooltip-thread-date-${thread.threadId}`} clickable place="top">
+                  {getRelativeTime(thread.createdAt)}
+                </Tooltip>
               </div>
             ))}
           </div>
