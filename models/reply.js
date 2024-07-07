@@ -23,6 +23,9 @@ const replySchema = new Schema(
         replyFileUrl: {
             type: String
         },
+        replyThumbnailFileUrl: {
+            type: String
+        }
     },
     { timestamps: true }
 );

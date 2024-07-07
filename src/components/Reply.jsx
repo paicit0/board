@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 
-const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError) => {
+const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file) => {
     e.preventDefault();
     console.log('Reply submitted:', reply);
     console.log('Thread ID:', threadId);
@@ -15,13 +17,43 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
         return;
     }
 
+    let replyFileUrl = '';
+    let replyThumbnailFileUrl = '';
+
+    if (file) {
+        try {
+            const fileBase64 = await fileToBase64(file);
+
+            const uploadResponse = await fetch('/api/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ fileName: file.name, contentType: file.type, imageBase64: fileBase64 }),
+            });
+
+            if (!uploadResponse.ok) {
+                throw new Error('File upload failed');
+            }
+
+            const uploadData = await uploadResponse.json();
+            replyFileUrl = uploadData.uploadUrl.split('?')[0];
+            replyThumbnailFileUrl = uploadData.thumbnailUrl;
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            setError('An error occurred while uploading the file.');
+            return;
+        }
+    }
+
     try {
         const response = await fetch('/api/createReply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ replyContent: reply, threadId: threadId })
+            body: JSON.stringify({ replyContent: reply, threadId: threadId, replyFileUrl, replyThumbnailFileUrl })
         });
 
         if (!response.ok) {
@@ -30,6 +62,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
 
         const data = await response.json();
         setReply('');
+        setMessage('Reply submitted successfully.');
         setSuccess(true);
         setError('');
         setTimeout(() => {
@@ -43,25 +76,35 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
     }
 };
 
+const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = error => reject(error);
+    });
+};
+
 function Reply({ threadId }) {
     const [reply, setReply] = useState('');
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false); 
     const [error, setError] = useState(''); 
+    const [file, setFile] = useState(null);
 
-    const closeError = () => {
-        setError('');
-      };
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
 
     return (
         <div className="sticky bottom-0 left-0 w-full p-4 bg-white pb-16">
-            <form onSubmit={(e) => handleSubmit(e, reply, setReply, setMessage, threadId, setSuccess, setError)}>
+            <form onSubmit={(e) => handleSubmit(e, reply, setReply, setMessage, threadId, setSuccess, setError, file)}>
                 <div className="flex flex-col">
                     {error && <p className="text-red-500">{error}</p>}
                     <input
-                    type="file"
-                    //onChange={}
-                    className="w-full bg-gray-200 border py-2 px-3 rounded text-lg mb-2"
+                        type="file"
+                        onChange={handleFileChange}
+                        className="w-full bg-gray-200 border py-2 px-3 rounded text-lg mb-2"
                     />
                     <input
                         type="text"

@@ -15,7 +15,7 @@ async function getNextSequenceValue(sequenceName) {
 
 export async function POST(req) {
   try {
-    const { title, threadContent, threadFileUrl } = await req.json(); // Include threadFileUrl here
+    const { title, threadContent, threadFileUrl, threadThumbnailFileUrl } = await req.json();
 
     if (!title || !threadContent) {
       return NextResponse.json({ message: "Title and content are required." }, { status: 400 });
@@ -23,7 +23,7 @@ export async function POST(req) {
 
     await connectMongoDB();
 
-    const threadId = await getNextSequenceValue('threadId');
+    const threadId = await getNextSequenceValue('commonId');
     console.log('Generated threadId:', threadId);
 
     const newThread = new Thread({
@@ -32,11 +32,13 @@ export async function POST(req) {
       threadContent,
       createdAt: new Date(),
       replyCount: 0,
-      threadFileUrl, 
+      threadFileUrl,
+      threadThumbnailFileUrl 
     });
 
     await newThread.save();
     console.log('New Thread:', newThread);
+
     return NextResponse.json({ message: "Thread Submitted.", threadId }, { status: 201 });
   } catch (error) {
     console.error("Error submitting thread:", error);

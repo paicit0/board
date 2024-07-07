@@ -85,6 +85,15 @@ export default function ThreadPage() {
                 {thread.replies.map((reply) => (
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
+                    {reply.replyFileUrl && (
+                      <div className="image-container my-2">
+                        <img 
+                          src={reply.replyFileUrl} // Display reply image directly
+                          alt="Reply Image" 
+                          className="max-w-full h-auto rounded-lg shadow-lg"
+                        />
+                      </div>
+                    )}
                     <p className="text-black">{reply.replyContent}</p>
                     <p className="text-black text-right">{formatDate(reply.createdAt)}</p>
                   </li>

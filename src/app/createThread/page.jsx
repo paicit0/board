@@ -20,7 +20,7 @@ function CreateThreadPage() {
   const handleFileUpload = async () => {
     if (!selectedFile) {
       alert('Please select a file to upload.');
-      return null;
+      return { fileUrl: null, thumbnailUrl: null };
     }
 
     try {
@@ -30,15 +30,15 @@ function CreateThreadPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fileName: selectedFile.name }),
+        body: JSON.stringify({ fileName: selectedFile.name, contentType: selectedFile.type, imageBase64: await fileToBase64(selectedFile) }),
       });
 
       if (!res.ok) {
         console.error('Failed to get upload URL:', res.statusText);
-        return null;
+        return { fileUrl: null, thumbnailUrl: null };
       }
 
-      const { uploadUrl } = await res.json();
+      const { uploadUrl, thumbnailUrl } = await res.json();
 
       // Step 2: Upload the file to S3 using the pre-signed URL
       const uploadRes = await fetch(uploadUrl, {
@@ -51,14 +51,23 @@ function CreateThreadPage() {
 
       if (!uploadRes.ok) {
         console.error('Failed to upload file to S3:', uploadRes.statusText);
-        return null;
+        return { fileUrl: null, thumbnailUrl: null };
       }
 
-      return uploadUrl.split('?')[0]; // Return the S3 file URL without query params
+      return { fileUrl: uploadUrl.split('?')[0], thumbnailUrl };
     } catch (error) {
       console.error('Error during file upload:', error);
-      return null;
+      return { fileUrl: null, thumbnailUrl: null };
     }
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = error => reject(error);
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -86,7 +95,7 @@ function CreateThreadPage() {
 
     setError("");
 
-    const fileUrl = await handleFileUpload();
+    const { fileUrl, thumbnailUrl } = await handleFileUpload();
 
     if (!fileUrl && selectedFile) {
       setError("Failed to upload file.");
@@ -97,6 +106,7 @@ function CreateThreadPage() {
       title,
       threadContent,
       threadFileUrl: fileUrl,
+      threadThumbnailFileUrl: thumbnailUrl
     };
 
     try {

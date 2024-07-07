@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../../lib/mongodb';
 import Reply from '../../../../models/reply';
-import Counter from '../../../../models/counter';
 import Thread from '../../../../models/thread';
+import Counter from '../../../../models/counter';
 
 async function getNextSequenceValue(sequenceName) {
   const counter = await Counter.findByIdAndUpdate(
@@ -16,7 +16,7 @@ async function getNextSequenceValue(sequenceName) {
 
 export async function POST(req) {
   try {
-    const { replyContent, threadId } = await req.json();
+    const { replyContent, threadId, replyFileUrl, replyThumbnailFileUrl } = await req.json();
 
     if (!replyContent || !threadId) {
       return NextResponse.json({ message: "Reply content and thread ID are required." }, { status: 400 });
@@ -24,8 +24,8 @@ export async function POST(req) {
 
     await connectMongoDB();
 
-    const replyId = await getNextSequenceValue('threadId');
-    console.log('Generated threadId:', threadId); 
+    const replyId = await getNextSequenceValue('commonId');
+    console.log('Generated replyId:', replyId);
 
     const newReply = new Reply({
       replyId,
@@ -33,6 +33,7 @@ export async function POST(req) {
       replyContent,
       createdAt: new Date(),
       replyFileUrl,
+      replyThumbnailFileUrl
     });
 
     await newReply.save();

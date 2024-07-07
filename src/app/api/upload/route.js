@@ -1,10 +1,7 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-
-// Log environment variables to verify they are loaded correctly
-console.log("Environment Variables:");
-console.log("REGION:", process.env.AWS_REGION);
-console.log("BUCKET_NAME:", process.env.S3_BUCKET_NAME);
+import sharp from 'sharp';
+import { NextResponse } from 'next/server';
 
 const REGION = process.env.AWS_REGION;
 const BUCKET_NAME = process.env.S3_BUCKET_NAME;
@@ -21,20 +18,50 @@ const getUploadUrl = async (key, contentType) => {
     const command = new PutObjectCommand({
         Bucket: BUCKET_NAME,
         Key: key,
-        ContentType: contentType, // Use the dynamic content type
+        ContentType: contentType,
     });
     const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
     return signedUrl;
 };
 
+const uploadToS3 = async (buffer, key, contentType) => {
+    const command = new PutObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: key,
+        Body: buffer,
+        ContentType: contentType,
+    });
+    await s3Client.send(command);
+};
+
+const createThumbnail = async (imageBuffer) => {
+    return sharp(imageBuffer)
+        .resize({ width: 200 })
+        .toBuffer();
+};
+
 export const POST = async (req) => {
     try {
-        const body = await req.text(); // Read the request body as plain text
-        console.log("Request body:", body); // Log the raw request body
-        const { fileName, contentType } = JSON.parse(body); // Parse the request body
-        const key = `uploads/${fileName}`; // Change the key as necessary
-        const uploadUrl = await getUploadUrl(key, contentType);
-        return new Response(JSON.stringify({ uploadUrl }), {
+        const { fileName, contentType, imageBase64 } = await req.json();
+        const imageBuffer = Buffer.from(imageBase64, 'base64');
+
+        // Create a thumbnail from the image buffer
+        const thumbnailBuffer = await createThumbnail(imageBuffer);
+
+        // Define S3 keys for the original image and the thumbnail
+        const originalKey = `uploads/${fileName}`;
+        const thumbnailKey = `thumbnails/${fileName}`;
+
+        // Upload the thumbnail to S3
+        await uploadToS3(thumbnailBuffer, thumbnailKey, contentType);
+
+        // Generate a signed URL for the original image upload
+        const uploadUrl = await getUploadUrl(originalKey, contentType);
+
+        // Return both upload URL and thumbnail URL
+        const thumbnailUrl = `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/${thumbnailKey}`;
+
+        return new Response(JSON.stringify({ uploadUrl, thumbnailUrl }), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'

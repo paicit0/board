@@ -29,8 +29,11 @@ const threadSchema = new Schema({
     threadFileUrl: {
         required: true,
         type: String
-        
     },
+    threadThumbnailFileUrl: {
+        required: true,
+        type: String
+    }
 }, { timestamps: true });
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
