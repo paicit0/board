@@ -98,9 +98,14 @@ export default function Home() {
         <div
           className="fixed z-50"
           style={{
-            left: `${cursorPosition.x + 20}px`,
+            left: cursorPosition.x + 300 > window.innerWidth ? 'auto' : `${cursorPosition.x + 20}px`,
+            right: cursorPosition.x + 300 > window.innerWidth ? `${window.innerWidth - cursorPosition.x + 20}px` : 'auto',
             top: `50%`,
-            transform: `translateY(-50%)`
+            transform: `translateY(-50%)`,
+            width: '400px', // Fixed width
+            height: 'auto', // Auto height to maintain aspect ratio
+            maxWidth: '100%', // Ensure it doesn't overflow the width of the viewport
+            maxHeight: '100vh', // Ensure it doesn't overflow the height of the viewport
           }}
         >
           <img 
@@ -108,8 +113,8 @@ export default function Home() {
             alt="Hovered Image" 
             className="object-contain"
             style={{
-              maxHeight: '100vh', // Ensure it fills the screen height-wise
-              maxWidth: 'calc(100vw - 40px)', // Ensure it doesn't overflow the width of the viewport
+              width: '100%', // Ensure it scales within the fixed size container
+              height: 'auto', // Maintain aspect ratio
             }}
           />
         </div>
