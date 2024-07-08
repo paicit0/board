@@ -106,26 +106,19 @@ export default function ThreadPage() {
             </div>
             <h2 className="text-3xl break-words">{thread.title}</h2>
             <p className="text-black break-words mb-4">{thread.threadContent}</p>
-            {thread.file && (
-              <img
-                src={enlargedImages[thread.threadId] ? thread.file : thread.threadThumbnailFileUrl}
-                alt="Thread file"
-                className={`mb-4 image-container ${enlargedImages[thread.threadId] ? 'w-full h-full' : 'w-32 h-32'}`}
-                onClick={() => toggleImageSize(thread.threadId)}
-                onMouseEnter={() => handleMouseEnter(thread.file)}
-                onMouseLeave={handleMouseLeave}
-              />
-            )}
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
+          {/* Thread Img*/}
           {thread.threadFileUrl && (
-            <img
+            
+            <img 
               src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
               alt="Thread Image"
               className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
               onClick={() => toggleImageSize(thread.threadFileUrl)}
-              onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)}
-              onMouseLeave={handleMouseLeave}
+              // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)}
+              // onMouseLeave={handleMouseLeave}
+              
             />
           )}
           <div className="w-full p-6 pt-2">
@@ -135,14 +128,15 @@ export default function ThreadPage() {
                 {thread.replies.map((reply) => (
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
+                    {/* reply photo */}
                     {reply.replyFileUrl && (
                       <img
                         src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
                         alt="Reply Image"
                         className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
                         onClick={() => toggleImageSize(reply.replyFileUrl)}
-                        onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
-                        onMouseLeave={handleMouseLeave}
+                        // onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
+                        // onMouseLeave={handleMouseLeave}
                       />
                     )}
                     <p className="text-black mb-4">{reply.replyContent}</p>
