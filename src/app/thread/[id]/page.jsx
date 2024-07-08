@@ -104,25 +104,22 @@ export default function ThreadPage() {
                 {getRelativeTime(thread.createdAt)}
               </Tooltip>
             </div>
-            <h2 className="text-3xl break-words">{thread.title}</h2>
-            <p className="text-black break-words mb-4">{thread.threadContent}</p>
+            <h2 className="text-3xl break-words mb-4">{thread.title}</h2>
+            {/* Thread Img*/}
+            {thread.threadFileUrl && (
+              <img 
+                src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
+                alt="Thread Image"
+                className={`max-w-full h-auto mb-4 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                onClick={() => toggleImageSize(thread.threadFileUrl)}
+                // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)} // hover
+                // onMouseLeave={handleMouseLeave}
+              />
+            )}
+            <p className="text-black break-words">{thread.threadContent}</p>
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
-          {/* Thread Img*/}
-          {thread.threadFileUrl && (
-            
-            <img 
-              src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
-              alt="Thread Image"
-              className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
-              onClick={() => toggleImageSize(thread.threadFileUrl)}
-              // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)}
-              // onMouseLeave={handleMouseLeave}
-              
-            />
-          )}
           <div className="w-full p-6 pt-2">
-            <h3 className="text-2xl mb-4">Reply</h3>
             {thread.replies ? (
               <ul className="space-y-4">
                 {thread.replies.map((reply) => (
