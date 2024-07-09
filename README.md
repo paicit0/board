@@ -1,7 +1,7 @@
 locally: npm run dev  
 deployed: https://board-iota-pied.vercel.app/  
 
-a simple imageboard website.  
+a simple imageboard website made using reactjs, nextjs, tailwindcss.  
 -authentication system using nextauth.js, encrypted passwords using bcryptjs.  
 -rough profile page to show the logged in user  
 -users make threads/replies with pictures/gif/videos(planned).  
