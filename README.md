@@ -1,2 +1,2 @@
-locally: npm run dev
-deployed: https://board-iota-pied.vercel.app/
+locally: npm run dev  
+deployed: https://board-iota-pied.vercel.app/  
