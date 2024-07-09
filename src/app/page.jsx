@@ -102,8 +102,8 @@ export default function Home() {
             right: cursorPosition.x + 300 > window.innerWidth ? `${window.innerWidth - cursorPosition.x + 20}px` : 'auto',
             top: `50%`,
             transform: `translateY(-50%)`,
-            width: '400px', // Fixed width
-            height: 'auto', // Auto height to maintain aspect ratio
+            width: 'auto', // Fixed width
+            height: '100vh', // Auto height to maintain aspect ratio
             maxWidth: '100%', // Ensure it doesn't overflow the width of the viewport
             maxHeight: '100vh', // Ensure it doesn't overflow the height of the viewport
           }}
@@ -113,8 +113,8 @@ export default function Home() {
             alt="Hovered Image" 
             className="object-contain"
             style={{
+              height: '100%', // Maintain aspect ratio
               width: '100%', // Ensure it scales within the fixed size container
-              height: 'auto', // Maintain aspect ratio
             }}
           />
         </div>
