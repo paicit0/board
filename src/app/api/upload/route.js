@@ -1,7 +1,8 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import sharp from 'sharp';
 import { NextResponse } from 'next/server';
+import sharp from 'sharp';
+
 
 const REGION = process.env.AWS_REGION;
 const BUCKET_NAME = process.env.S3_BUCKET_NAME;
@@ -13,7 +14,7 @@ const s3Client = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
-
+// signed url
 const getUploadUrl = async (key, contentType) => {
     const command = new PutObjectCommand({
         Bucket: BUCKET_NAME,
@@ -24,6 +25,7 @@ const getUploadUrl = async (key, contentType) => {
     return signedUrl;
 };
 
+//S3 upload
 const uploadToS3 = async (buffer, key, contentType) => {
     const command = new PutObjectCommand({
         Bucket: BUCKET_NAME,
@@ -34,6 +36,7 @@ const uploadToS3 = async (buffer, key, contentType) => {
     await s3Client.send(command);
 };
 
+//Thumbnail
 const createThumbnail = async (imageBuffer) => {
     return sharp(imageBuffer)
         .resize({ width: 200 })
