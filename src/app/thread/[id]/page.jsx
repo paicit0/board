@@ -111,7 +111,7 @@ export default function ThreadPage() {
                 <img 
                   src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
                   alt="Thread Image"
-                  className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                  className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
                   onClick={() => toggleImageSize(thread.threadFileUrl)}
                   // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)} // hover
                   // onMouseLeave={handleMouseLeave}
@@ -133,7 +133,7 @@ export default function ThreadPage() {
                         <img
                           src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
                           alt="Reply Image"
-                          className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                          className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
                           onClick={() => toggleImageSize(reply.replyFileUrl)}
                           // onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
                           // onMouseLeave={handleMouseLeave}

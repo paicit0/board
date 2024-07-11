@@ -39,7 +39,7 @@ const uploadToS3 = async (buffer, key, contentType) => {
 //Thumbnail
 const createThumbnail = async (imageBuffer) => {
     return sharp(imageBuffer)
-        .resize({ width: 200 })
+        .resize({ width: 250 })
         .toBuffer();
 };
 
