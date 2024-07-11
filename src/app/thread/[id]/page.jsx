@@ -96,15 +96,17 @@ export default function ThreadPage() {
         <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg">
           <div className="p-8 border-b flex flex-col">
             <div className="flex items-center justify-between">
-              <p className="text-red-500">No. {thread.threadId}</p>
-              <p id={`thread-date-${thread.threadId}`} className="text-black text-right" data-tooltip-id={`tooltip-thread-date-${thread.threadId}`} style={{ display: 'inline-block' }}>
-                {formatDate(thread.createdAt)}
-              </p>
-              <Tooltip id={`tooltip-thread-date-${thread.threadId}`} clickable place="top">
-                {getRelativeTime(thread.createdAt)}
-              </Tooltip>
+              <div className="flex space-x-1">
+                <p id={`thread-date-${thread.threadId}`} className="text-black text-left" data-tooltip-id={`tooltip-thread-date-${thread.threadId}`} style={{ display: 'inline-block' }}>
+                  {formatDate(thread.createdAt)}
+                </p>
+                <Tooltip id={`tooltip-thread-date-${thread.threadId}`} clickable place="top">
+                  {getRelativeTime(thread.createdAt)}
+                </Tooltip>
+                <p className="text-red-500">No. {thread.threadId}</p>
+              </div>
             </div>
-            <h2 className="text-3xl mb-4 mt-8 break-words">{thread.title}</h2>
+            <h2 className="text-3xl mb-4 mt-2 break-words">{thread.title}</h2>
             {/* Thread Img*/}
             <div className="flex items-start mb-4">
               {thread.threadFileUrl && (
@@ -126,7 +128,15 @@ export default function ThreadPage() {
               <ul className="space-y-4">
                 {thread.replies.map((reply) => (
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
-                    <p className="text-red-500">No. {reply.replyId}</p>
+                    <div className="flex space-x-1">
+                      <p id={`reply-date-${reply._id}`} className="text-black text-left" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
+                        {formatDate(reply.createdAt)}
+                      </p>
+                      <Tooltip id={`tooltip-reply-date-${reply._id}`} clickable place="top">
+                        {getRelativeTime(reply.createdAt)}
+                      </Tooltip>
+                      <p className="text-red-500">No. {reply.replyId}</p>
+                    </div>
                     {/* reply photo */}
                     <div className="flex items-start mb-4">
                       {reply.replyFileUrl && (
@@ -139,14 +149,9 @@ export default function ThreadPage() {
                           // onMouseLeave={handleMouseLeave}
                         />
                       )}
-                      <p className="text-black mb-4 break-words w-1/2">{reply.replyContent}</p>
+                      <p className="text-black mb-4 break-words w-1/2 mt-2">{reply.replyContent}</p>
                     </div>
-                    <p id={`reply-date-${reply._id}`} className="text-black text-right text-sm" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
-                      {formatDate(reply.createdAt)}
-                    </p>
-                    <Tooltip id={`tooltip-reply-date-${reply._id}`} clickable place="top">
-                      {getRelativeTime(reply.createdAt)}
-                    </Tooltip>
+
                   </li>
                 ))}
               </ul>
