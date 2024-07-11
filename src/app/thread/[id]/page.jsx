@@ -117,7 +117,7 @@ export default function ThreadPage() {
                   // onMouseLeave={handleMouseLeave}
                 />
               )}
-              <p className="text-black break-all w-1/2">{thread.threadContent}</p>
+              <p className="text-black break-words w-1/2">{thread.threadContent}</p>
             </div>
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
@@ -139,7 +139,7 @@ export default function ThreadPage() {
                           // onMouseLeave={handleMouseLeave}
                         />
                       )}
-                      <p className="text-black mb-4 break-all w-1/2">{reply.replyContent}</p>
+                      <p className="text-black mb-4 break-words w-1/2">{reply.replyContent}</p>
                     </div>
                     <p id={`reply-date-${reply._id}`} className="text-black text-right text-sm" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
                       {formatDate(reply.createdAt)}
