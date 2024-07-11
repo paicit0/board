@@ -93,7 +93,7 @@ export default function ThreadPage() {
   return (
     <div className="flex flex-col min-h-screen" onMouseMove={handleMouseMove}>
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg">
+        <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg">
           <div className="p-8 border-b flex flex-col">
             <div className="flex items-center justify-between">
               <p className="text-red-500">No. {thread.threadId}</p>
@@ -104,19 +104,21 @@ export default function ThreadPage() {
                 {getRelativeTime(thread.createdAt)}
               </Tooltip>
             </div>
-            <h2 className="text-3xl break-words mb-4">{thread.title}</h2>
+            <h2 className="text-3xl mb-4">{thread.title}</h2>
             {/* Thread Img*/}
-            {thread.threadFileUrl && (
-              <img 
-                src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
-                alt="Thread Image"
-                className={`max-w-full h-auto mb-4 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
-                onClick={() => toggleImageSize(thread.threadFileUrl)}
-                // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)} // hover
-                // onMouseLeave={handleMouseLeave}
-              />
-            )}
-            <p className="text-black break-words">{thread.threadContent}</p>
+            <div className="flex items-start mb-4">
+              {thread.threadFileUrl && (
+                <img 
+                  src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
+                  alt="Thread Image"
+                  className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                  onClick={() => toggleImageSize(thread.threadFileUrl)}
+                  // onMouseEnter={() => handleMouseEnter(thread.threadFileUrl)} // hover
+                  // onMouseLeave={handleMouseLeave}
+                />
+              )}
+              <p className="text-black break-all w-1/2">{thread.threadContent}</p>
+            </div>
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
           </div>
           <div className="w-full p-6 pt-2">
@@ -126,17 +128,19 @@ export default function ThreadPage() {
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <p className="text-red-500">No. {reply.replyId}</p>
                     {/* reply photo */}
-                    {reply.replyFileUrl && (
-                      <img
-                        src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
-                        alt="Reply Image"
-                        className={`max-w-full h-auto rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
-                        onClick={() => toggleImageSize(reply.replyFileUrl)}
-                        // onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
-                        // onMouseLeave={handleMouseLeave}
-                      />
-                    )}
-                    <p className="text-black mb-4">{reply.replyContent}</p>
+                    <div className="flex items-start mb-4">
+                      {reply.replyFileUrl && (
+                        <img
+                          src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
+                          alt="Reply Image"
+                          className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-full h-full' : 'w-32 h-32'}`}
+                          onClick={() => toggleImageSize(reply.replyFileUrl)}
+                          // onMouseEnter={() => handleMouseEnter(reply.replyFileUrl)}
+                          // onMouseLeave={handleMouseLeave}
+                        />
+                      )}
+                      <p className="text-black mb-4 break-all w-1/2">{reply.replyContent}</p>
+                    </div>
                     <p id={`reply-date-${reply._id}`} className="text-black text-right text-sm" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
                       {formatDate(reply.createdAt)}
                     </p>
