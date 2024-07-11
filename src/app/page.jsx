@@ -62,7 +62,7 @@ export default function Home() {
       <div className="flex-grow text-center p-10">
         <Link className='bg-green-500 hover:bg-green-600 w-fit text-sm text-white py-3 px-5 rounded-md mt-2' href="/createThread">Submit a Thread</Link>
         <div className="flex justify-center my-10">
-          <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-4">
+          <div className="w-full max-w-8xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-4">
             {threads.map((thread) => (
               <div key={thread.threadId} className="p-5 border flex flex-col relative">
                 {thread.threadThumbnailFileUrl && thread.threadFileUrl && (
