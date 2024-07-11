@@ -104,7 +104,7 @@ export default function ThreadPage() {
                 {getRelativeTime(thread.createdAt)}
               </Tooltip>
             </div>
-            <h2 className="text-3xl mb-4">{thread.title}</h2>
+            <h2 className="text-3xl mb-4 mt-8 break-words">{thread.title}</h2>
             {/* Thread Img*/}
             <div className="flex items-start mb-4">
               {thread.threadFileUrl && (

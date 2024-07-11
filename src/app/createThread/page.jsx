@@ -10,7 +10,7 @@ function CreateThreadPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [submitting, setSubmitting] = useState(false); // Add submitting state
+  const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -107,8 +107,8 @@ function CreateThreadPage() {
       return;
     }
 
-    if (threadContent.length > 1000) {
-      setError(`Content is too long. Maximum length is 1000 characters. The current content length is ${threadContent.length} characters.`);
+    if (threadContent.length > 2000) {
+      setError(`Content is too long. Maximum length is 2000 characters. The current content length is ${threadContent.length} characters.`);
       setSubmitting(false);
       return;
     }
@@ -158,23 +158,30 @@ function CreateThreadPage() {
     <div>
       <div className="flex justify-center items-center">
         <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
+      
           <div className='text-3xl text-center'>Submit Thread</div>
+
           {error && <p className="text-red-500">{error}</p>}
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type="text" maxLength="200"
               className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2'
               placeholder='Title'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+            <div className={'ml-2 text-sm text-right'}>{title.length}/200</div>
+
             <textarea
               className="w-full bg-gray-200 border py-2 px-3 rounded text-lg mb-2 h-40"
               placeholder="Text"
               rows="5"
+              maxLength="2000"
               value={threadContent}
               onChange={(e) => setThreadContent(e.target.value)}
             ></textarea>
+            <div className={'ml-2 text-sm text-right'}>{threadContent.length}/2000</div>
+
             <input
               type="file"
               onChange={handleFileChange}
