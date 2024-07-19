@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -10,14 +10,24 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const { data: session } = useSession();
   const router = useRouter();
   
-  if (session) router.replace('/welcome');
+  useEffect(() => {
+    if (session) {
+      router.replace('/welcome');
+    }
+  }, [session, router]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (submitting) return; // Prevent multiple submissions
+
+    setSubmitting(true); // Disable further submissions
 
     if (password !== confirmPassword) {
       setError("Passwords do not match!");

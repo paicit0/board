@@ -10,11 +10,16 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (submitting) return; // Prevent multiple submissions
+
+    setSubmitting(true); // Disable further submissions
 
     if (!email || !password) {
       setError("Please complete all inputs.");
