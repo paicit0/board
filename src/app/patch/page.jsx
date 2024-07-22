@@ -8,10 +8,18 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchReadme() {
-      const response = await fetch('/api/readmeFetch');
-      const data = await response.json();
-      const html = marked(data.content);
-      setReadme(html);
+      try {
+        const response = await fetch('https://api.github.com/repos/paicit0/board/readme', {
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        const data = await response.json();
+        const readmeContent = atob(data.content);
+        setReadme(marked(readmeContent));
+      } catch (error) {
+        console.error('Error fetching README:', error);
+      }
     }
 
     fetchReadme();

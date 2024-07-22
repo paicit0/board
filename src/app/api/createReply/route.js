@@ -41,7 +41,11 @@ export async function POST(req) {
 
     const updatedThread = await Thread.findOneAndUpdate(
       { threadId: threadId },
-      { $push: { replies: newReply._id }, $inc: { replyCount: 1 } },
+      { 
+        $push: { replies: newReply._id }, 
+        $inc: { replyCount: 1 },
+        $set: { latestReplyAt: new Date() } // Update latestReplyAt field
+      },
       { new: true }
     );
 

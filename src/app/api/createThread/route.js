@@ -33,7 +33,8 @@ export async function POST(req) {
       createdAt: new Date(),
       replyCount: 0,
       threadFileUrl,
-      threadThumbnailFileUrl 
+      threadThumbnailFileUrl,
+      latestReplyAt: new Date()
     });
 
     await newThread.save();

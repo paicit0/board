@@ -170,7 +170,7 @@ export default function ThreadPage() {
             right: cursorPosition.x + 300 > window.innerWidth ? `${window.innerWidth - cursorPosition.x + 20}px` : 'auto',
             top: `50%`,
             transform: `translateY(-50%)`,
-            width: '400px', // Fixed width
+            width: 'auto', // Fixed width
             height: 'auto', // Auto height to maintain aspect ratio
             maxWidth: '100%', // Ensure it doesn't overflow the width of the viewport
             maxHeight: '100vh', // Ensure it doesn't overflow the height of the viewport

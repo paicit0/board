@@ -11,6 +11,7 @@ export default function Home() {
   const [threads, setThreads] = useState([]);
   const [hoveredImageSrc, setHoveredImageSrc] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [sortOption, setSortOption] = useState('date-desc');
 
   useEffect(() => {
     const fetchThreads = async () => {
@@ -57,13 +58,48 @@ export default function Home() {
     setCursorPosition({ x: e.clientX, y: e.clientY });
   };
 
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
+
+  const sortThreads = (threads, option) => {
+    switch (option) {
+      case 'date-asc':
+        return [...threads].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      case 'date-desc':
+        return [...threads].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      case 'reply-asc':
+        return [...threads].sort((a, b) => a.replyCount - b.replyCount);
+      case 'reply-desc':
+        return [...threads].sort((a, b) => b.replyCount - a.replyCount);
+      // case 'bump-order':
+      //   return [...threads].sort((a, b) => new Date(b.latestReplyAt) - new Date(a.latestReplyAt));
+      default:
+        return threads;
+    }
+  };
+
+  const sortedThreads = sortThreads(threads, sortOption);
+
   return (
     <main onMouseMove={handleMouseMove}>
       <div className="flex-grow text-center p-10">
         <Link className='bg-green-500 hover:bg-green-600 w-fit text-sm text-white py-3 px-5 rounded-md mt-2' href="/createThread">Submit a Thread</Link>
+        <div className="flex justify-between items-center my-10">
+          <div className="w-full max-w-8xl">
+            <label htmlFor="sort" className="mr-2">Sort by:</label>
+            <select id="sort" value={sortOption} onChange={handleSortChange} className="p-2 border rounded">
+              <option value="date-desc">Date (Newest)</option>
+              <option value="date-asc">Date (Oldest)</option>
+              <option value="reply-asc">Replies (Fewest)</option>
+              <option value="reply-desc">Replies (Most)</option>
+              {/* <option value="bump-order">Bump Order</option> */}
+            </select>
+          </div>
+        </div>
         <div className="flex justify-center my-10">
           <div className="w-full max-w-8xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-4">
-            {threads.map((thread) => (
+            {sortedThreads.map((thread) => (
               <div key={thread.threadId} className="p-5 border flex flex-col relative">
                 {thread.threadThumbnailFileUrl && thread.threadFileUrl && (
                   <div 
