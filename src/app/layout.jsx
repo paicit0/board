@@ -11,8 +11,8 @@ const Layout = ({ children }) => {
   return (
     <html>
       <head>
-        <title>Piyapat's Board</title>
-        <meta name="description" content="Welcome to the board." />
+        <title>Piyapat&apos;s Board</title>
+        <meta name="description" content="Welcome to the board."/>
       </head>
       <body className="flex flex-col min-h-screen">
         <AuthProvider>
