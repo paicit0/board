@@ -8,12 +8,7 @@ export async function GET(req, { params }) {
       await connectMongoDB();
   
       const threadId = params.id;
-  
-      // Fetch the thread without populating to log its initial state
-      const threadBeforePopulate = await Thread.findOne({ threadId: threadId });
-      console.log('Thread before populate:', threadBeforePopulate);
-  
-      // Fetch the thread with populating the replies
+
       const thread = await Thread.findOne({ threadId: threadId }).populate('replies').exec();
       console.log('Thread after populate:', thread);
   

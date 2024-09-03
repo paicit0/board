@@ -13,6 +13,12 @@ export default function ThreadPage() {
   const [enlargedImages, setEnlargedImages] = useState({});
   const [hoveredImageSrc, setHoveredImageSrc] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [replyTo, setReplyTo] = useState(null);
+
+  const handleReply = (replyId) => {
+    setReplyTo(replyTo === replyId ? null : replyId); // Toggle reply form visibility
+    console.log(replyId);
+  };
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -90,6 +96,8 @@ export default function ThreadPage() {
     return formatDistanceToNow(new Date(dateString), { addSuffix: true });
   };
 
+
+
   return (
     <div className="flex flex-col min-h-screen" onMouseMove={handleMouseMove}>
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
@@ -122,6 +130,8 @@ export default function ThreadPage() {
               <p className="text-black break-words w-1/2">{thread.threadContent}</p>
             </div>
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
+            <button className="mb-2 text-right" onClick={() => handleReply(thread.threadId)}>REPLY</button>
+            {replyTo === thread.threadId && <Reply threadId={thread.threadId} />}
           </div>
           <div className="w-full p-6 pt-2">
             {thread.replies ? (
@@ -150,6 +160,9 @@ export default function ThreadPage() {
                         />
                       )}
                       <p className="text-black mb-4 break-words w-1/2 mt-2">{reply.replyContent}</p>
+                      {/* reply's reply button */}
+                      <button className="mb-2 text-right" onClick={() => handleReply(reply._id)}>REPLY</button>
+                      {replyTo === reply._id && <Reply threadId={thread.threadId} replyId={reply._id} />}
                     </div>
 
                   </li>
@@ -159,7 +172,7 @@ export default function ThreadPage() {
               <p>No replies yet.</p>
             )}
           </div>
-          <Reply threadId={thread.threadId} />
+          {/* <Reply threadId={thread.threadId} /> */}
         </div>
       </main>
       {hoveredImageSrc && (

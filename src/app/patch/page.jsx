@@ -15,8 +15,8 @@ export default function Home() {
           }
         });
         const data = await response.json();
-        const readmeContent = atob(data.content);
-        setReadme(marked(readmeContent));
+        const readmeContent = atob(data.content); // decodes base64 string
+        setReadme(marked(readmeContent)); // markdown to html
       } catch (error) {
         console.error('Error fetching README:', error);
       }
@@ -28,6 +28,8 @@ export default function Home() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Features</h1>
+
+      {/* Displaying the README content as HTML using dangerouslySetInnerHTML */}
       <div className="prose" dangerouslySetInnerHTML={{ __html: readme }} />
     </div>
   );

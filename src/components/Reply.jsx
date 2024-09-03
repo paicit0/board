@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting) => {
+const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting, parentReplyId) => {
     e.preventDefault();
 
     if (reply.length === 0) {
@@ -73,7 +73,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ replyContent: reply, threadId, replyFileUrl, replyThumbnailFileUrl }),
+            body: JSON.stringify({ replyContent: reply, threadId, replyFileUrl, replyThumbnailFileUrl, parentReplyId }),
         });
 
         if (!response.ok) {
@@ -89,7 +89,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
         setSuccess(true);
         setError('');
         setTimeout(() => {
-            window.location.reload();
+            // window.location.reload();
         }, 1000);
 
     } catch (error) {
@@ -110,13 +110,13 @@ const fileToBase64 = (file) => {
     });
 };
 
-function Reply({ threadId }) {
+function Reply({ threadId, parentReplyId }) {
     const [reply, setReply] = useState('');
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false); 
     const [error, setError] = useState(''); 
     const [file, setFile] = useState(null);
-    const [submitting, setSubmitting] = useState(false); // Track submitting state
+    const [submitting, setSubmitting] = useState(false);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -125,8 +125,9 @@ function Reply({ threadId }) {
     return (
         <div className="sticky bottom-0 left-0 w-full p-4 bg-white pb-16">
             <form onSubmit={(e) => {
+                e.preventDefault();
                 setSubmitting(true); // Disable the button immediately on submit
-                handleSubmit(e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting);
+                handleSubmit(e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting, parentReplyId);
             }}>
                 <div className="flex flex-col">
                     {error && <p className="text-red-500">{error}</p>}

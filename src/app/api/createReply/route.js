@@ -16,7 +16,7 @@ async function getNextSequenceValue(sequenceName) {
 
 export async function POST(req) {
   try {
-    const { replyContent, threadId, replyFileUrl, replyThumbnailFileUrl } = await req.json();
+    const { replyContent, threadId, replyFileUrl, replyThumbnailFileUrl, parentReplyId } = await req.json();
 
     if (!replyContent || !threadId) {
       return NextResponse.json({ message: "Reply content and thread ID are required." }, { status: 400 });
@@ -30,25 +30,36 @@ export async function POST(req) {
     const newReply = new Reply({
       replyId,
       threadId,
-      replyContent,
+      parentReplyId: parentReplyId || null,
       createdAt: new Date(),
+      replyContent,
       replyFileUrl,
-      replyThumbnailFileUrl
+      replyThumbnailFileUrl,
     });
 
     await newReply.save();
     console.log('New Reply:', newReply);
 
-    const updatedThread = await Thread.findOneAndUpdate(
+    if (parentReplyId) {
+      const updatedParentReply = await Reply.findOneAndUpdate(
+        { replyId: parentReplyId },
+        { 
+          $push: { replies: newReply._id }, 
+        },
+        { new: true }
+      );
+      console.log('Updated Parent Reply:', updatedParentReply);
+    } 
+
+    const updatedThread = await Thread.findOneAndUpdate( 
       { threadId: threadId },
       { 
         $push: { replies: newReply._id }, 
         $inc: { replyCount: 1 },
-        $set: { latestReplyAt: new Date() } // Update latestReplyAt field
+        $set: { latestReplyAt: new Date() } 
       },
       { new: true }
     );
-
     console.log('Updated Thread:', updatedThread);
 
     return NextResponse.json({ message: "Reply Submitted.", replyId }, { status: 201 });

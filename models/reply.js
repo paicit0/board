@@ -15,16 +15,22 @@ const replySchema = new Schema(
             type: Date,
             default: Date.now
         },
-        parentReply: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Reply',
-            default: null
+        parentReplyId: [{
+            type: Number
         }],
         replyFileUrl: {
             type: String
         },
         replyThumbnailFileUrl: {
             type: String
+        },
+        replies: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Reply'
+        }],
+        replyCount: {
+            type: Number,
+            default: 0
         }
     },
     { timestamps: true }

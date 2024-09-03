@@ -62,6 +62,7 @@ export default function Home() {
     setSortOption(e.target.value);
   };
 
+
   const sortThreads = (threads, option) => {
     switch (option) {
       case 'date-asc':
@@ -78,7 +79,7 @@ export default function Home() {
         return threads;
     }
   };
-
+  
   const sortedThreads = sortThreads(threads, sortOption);
 
   return (
