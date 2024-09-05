@@ -1,0 +1,109 @@
+[33mcd21088[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: checkout: moving from testBranch to main
+[33m7a21e2c[m[33m ([m[1;31morigin/testBranch[m[33m, [m[1;32mtestBranch[m[33m)[m HEAD@{1}: commit: test branch created
+[33mcd21088[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{2}: checkout: moving from main to testBranch
+[33mcd21088[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{3}: commit: apos fix
+[33mef5bce4[m HEAD@{4}: commit: google verify
+[33mb1620eb[m HEAD@{5}: commit: thread sorting. read me fetch.
+[33m06e724c[m HEAD@{6}: commit: submit fixes
+[33mfbc60f6[m HEAD@{7}: commit: added test page
+[33m760ecc5[m HEAD@{8}: commit: home page size
+[33m478d980[m HEAD@{9}: commit: margin, threads fixes.
+[33m740ac60[m HEAD@{10}: commit: image size fixes.
+[33md910d89[m HEAD@{11}: commit: input maxlength, margin fix.
+[33m30a7288[m HEAD@{12}: commit: break-words
+[33mff19c70[m HEAD@{13}: commit: text placement/wrapping fixes.
+[33m82a9c7f[m HEAD@{14}: commit: comments
+[33ma17dd5f[m HEAD@{15}: commit: readme
+[33mcbeff4d[m HEAD@{16}: commit: footer github fix
+[33m8676a95[m HEAD@{17}: pull --tags origin main: Merge made by the 'ort' strategy.
+[33m2fc8e4c[m HEAD@{18}: commit: patchnote (fetch from github/readme)
+[33m48eb17a[m HEAD@{19}: commit: -removed .env.local
+[33m104e39e[m HEAD@{20}: commit: thread/id/ fix
+[33mbb43ec8[m HEAD@{21}: commit: redundant codes fix
+[33m0446a3e[m HEAD@{22}: commit: added github on footer
+[33mc12b182[m HEAD@{23}: commit: added github on footer
+[33m4c7b4d6[m HEAD@{24}: commit: furthur hover fixes.
+[33m3f9757b[m HEAD@{25}: commit: hover fixes.
+[33m8ede531[m HEAD@{26}: commit: createThread file name fix
+[33m58782cc[m HEAD@{27}: commit: hover and date fixes
+[33m0e7dc9d[m HEAD@{28}: commit: thread image toggle fix
+[33m12ec2ae[m HEAD@{29}: commit: reply /upload/ fix
+[33m6c07f0d[m HEAD@{30}: commit: .gitignore
+[33m1ddc829[m HEAD@{31}: commit: .gitignore fix
+[33mbb5171a[m HEAD@{32}: commit: date tooltips using react-tooltip. font changes
+[33m7e0a020[m HEAD@{33}: commit: fixes button
+[33mbaef4d5[m HEAD@{34}: commit: cursor fixes
+[33macd9862[m HEAD@{35}: commit: downgraded sharp.
+[33m7373cc9[m HEAD@{36}: commit: sharp dependencies
+[33m5684018[m HEAD@{37}: commit: disabled submit after first click
+[33m8d529e9[m HEAD@{38}: commit: reply image + enlarge image on hover
+[33me4930e3[m HEAD@{39}: commit: sharp
+[33m0258949[m HEAD@{40}: commit: implemented aws s3 for files uploading and displaying it
+[33m7002e3d[m HEAD@{41}: commit: reply
+[33m8368e68[m HEAD@{42}: commit: disabled={success} for login.
+[33m17af477[m HEAD@{43}: commit: Changed colors. Border for threads
+[33m0a757bf[m HEAD@{44}: commit: -back to home thread button
+[33m19f95ee[m HEAD@{45}: commit: -vercel.json
+[33m1deac69[m HEAD@{46}: commit: vercel.json fix
+[33m0ff3292[m HEAD@{47}: commit: vercel.json
+[33m556daeb[m HEAD@{48}: commit: Fixes
+[33mf31fe9f[m HEAD@{49}: commit: Sticky reply + fixes dates
+[33maaf0f50[m HEAD@{50}: commit: Date changes.
+[33m993c10d[m HEAD@{51}: commit: reply fixes
+[33m57c09b8[m HEAD@{52}: commit: fixes.
+[33m06e6aa6[m HEAD@{53}: commit: replies working.
+[33maa4dddf[m HEAD@{54}: commit: fixes counter.
+[33me6a9be6[m HEAD@{55}: commit: replies and threads share counter.
+[33mcea5600[m HEAD@{56}: commit: reply component prototype.
+[33m8bf55e2[m HEAD@{57}: commit: reply prototype.
+[33md15e983[m HEAD@{58}: commit: several fixes.
+[33me77d21a[m HEAD@{59}: commit: register button fixes.
+[33mc7ff734[m HEAD@{60}: commit: createThread, button changes.
+[33mc28a64c[m HEAD@{61}: commit: thread/[id] somehow working.
+[33ma37d3c3[m HEAD@{62}: commit: login constraint
+[33meed45ec[m HEAD@{63}: commit: implementing thread viewing
+[33m5811c92[m HEAD@{64}: commit: thread counting.
+[33m75d89eb[m HEAD@{65}: commit: added reply count.
+[33mb6eedc3[m HEAD@{66}: commit: added speed insights
+[33m66b72ee[m HEAD@{67}: commit: submit thread button.
+[33m56956e2[m HEAD@{68}: commit: thread updates.
+[33m57f1d7d[m HEAD@{69}: commit: vercel deployment ready
+[33m0f86cf9[m HEAD@{70}: commit: auth
+[33mfde826a[m HEAD@{71}: commit: yarn
+[33m7a1d14f[m HEAD@{72}: commit: axios
+[33m699998b[m HEAD@{73}: commit: use client
+[33m1e402e9[m HEAD@{74}: commit: minor names fix
+[33m3e7eb9a[m HEAD@{75}: commit: show threads.
+[33me1c2935[m HEAD@{76}: commit: create thread mongodb.
+[33m3372e44[m HEAD@{77}: commit: input image on createThread
+[33ma01fc45[m HEAD@{78}: commit: added upvotes/downvotes in schemas
+[33mce170ba[m HEAD@{79}: commit: -contact, menu
+[33ma77dbb3[m HEAD@{80}: commit: Submit frontend
+[33m7bc2347[m HEAD@{81}: commit: sign in button {success}
+[33mfafb8bb[m HEAD@{82}: commit: schemas updated
+[33m15b8fff[m HEAD@{83}: commit: added thread, reply schema
+[33m9ef7215[m HEAD@{84}: commit: Test Thread
+[33mc02116a[m[33m ([m[1;31morigin/default1[m[33m, [m[1;31morigin/backup-branch[m[33m, [m[1;32mdefault1[m[33m, [m[1;32mbackup-branch[m[33m)[m HEAD@{85}: checkout: moving from backup-branch to main
+[33mc02116a[m[33m ([m[1;31morigin/default1[m[33m, [m[1;31morigin/backup-branch[m[33m, [m[1;32mdefault1[m[33m, [m[1;32mbackup-branch[m[33m)[m HEAD@{86}: checkout: moving from default1 to backup-branch
+[33mc02116a[m[33m ([m[1;31morigin/default1[m[33m, [m[1;31morigin/backup-branch[m[33m, [m[1;32mdefault1[m[33m, [m[1;32mbackup-branch[m[33m)[m HEAD@{87}: checkout: moving from main to default1
+[33mc02116a[m[33m ([m[1;31morigin/default1[m[33m, [m[1;31morigin/backup-branch[m[33m, [m[1;32mdefault1[m[33m, [m[1;32mbackup-branch[m[33m)[m HEAD@{88}: commit: redirect to /login after successful registration
+[33m42e01f7[m HEAD@{89}: commit: timeout after successful logins to display the message
+[33m72fb4ff[m HEAD@{90}: commit: working session with "Profile" and "Sign Out"
+[33mbc8b680[m HEAD@{91}: commit: working login.
+[33m40be059[m HEAD@{92}: commit: register implemented.
+[33m4226a13[m HEAD@{93}: commit: register routing.
+[33m303ff85[m HEAD@{94}: commit: mongodb .env added
+[33me959dad[m HEAD@{95}: commit: registering logics
+[33ma51a7a8[m HEAD@{96}: commit: auth
+[33meb41f8b[m HEAD@{97}: commit: register + login prototype
+[33md62dedd[m HEAD@{98}: commit: ts to jsx
+[33madfdad2[m HEAD@{99}: commit: login page prototype.
+[33m60cfdcc[m HEAD@{100}: commit: added restaurants examples
+[33mb77742f[m HEAD@{101}: commit: configuring nextauth
+[33mfed1c53[m HEAD@{102}: commit: added auth.js for authentication
+[33me08d1d6[m HEAD@{103}: commit: navbar fixes
+[33m09f6e74[m HEAD@{104}: commit: Added new components
+[33m4e769e2[m HEAD@{105}: commit: buttons
+[33md1dd943[m HEAD@{106}: commit: pages
+[33ma126ecc[m HEAD@{107}: commit: cypress
+[33m3e1adc9[m HEAD@{108}: clone: from https://github.com/paicit0/restaurant.git
