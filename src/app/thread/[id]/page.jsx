@@ -17,7 +17,7 @@ export default function ThreadPage() {
 
   const handleReply = (replyId) => {
     setReplyTo(replyTo === replyId ? null : replyId); // Toggle reply form visibility
-    console.log(replyId);
+    console.log("Replying to:", replyId, "In the thread:", thread.threadId, replies)
   };
 
   useEffect(() => {
@@ -97,7 +97,6 @@ export default function ThreadPage() {
   };
 
 
-
   return (
     <div className="flex flex-col min-h-screen" onMouseMove={handleMouseMove}>
       <main className="flex flex-col items-center justify-start flex-grow p-10 bg-gray-100 pb-20">
@@ -131,12 +130,15 @@ export default function ThreadPage() {
             </div>
             <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
             <button className="mb-2 text-right" onClick={() => handleReply(thread.threadId)}>REPLY</button>
-            {replyTo === thread.threadId && <Reply threadId={thread.threadId} />}
+            {replyTo === thread.threadId && <Reply threadId={thread.threadId} parentReplyId={replyTo} />}
+            
           </div>
           <div className="w-full p-6 pt-2">
-            {thread.replies ? (
-              <ul className="space-y-4">
-                {thread.replies.map((reply) => (
+            {thread.replies.length > 0 ? (
+              <ul className="space-y-4">  
+                {thread.replies
+                .filter(reply => reply.parentReplyId === null)
+                .map((reply) => (
                   <li key={reply._id} className="p-4 bg-gray-200 rounded-md break-words whitespace-pre-wrap">
                     <div className="flex space-x-1">
                       <p id={`reply-date-${reply._id}`} className="text-black text-left" data-tooltip-id={`tooltip-reply-date-${reply._id}`} style={{ display: 'inline-block' }}>
@@ -161,18 +163,17 @@ export default function ThreadPage() {
                       )}
                       <p className="text-black mb-4 break-words w-1/2 mt-2">{reply.replyContent}</p>
                       {/* reply's reply button */}
-                      <button className="mb-2 text-right" onClick={() => handleReply(reply._id)}>REPLY</button>
-                      {replyTo === reply._id && <Reply threadId={thread.threadId} replyId={reply._id} />}
+                      <button className="mb-2 text-right" onClick={() => handleReply(reply.replyId)}>REPLY</button>
+                      {replyTo === reply.replyId && <Reply threadId={thread.threadId} parentReplyId={replyTo} />}
                     </div>
 
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>No replies yet.</p>
+              <p className="w-full p-6 pt-2 h-28">No replies yet...</p>
             )}
           </div>
-          {/* <Reply threadId={thread.threadId} /> */}
         </div>
       </main>
       {hoveredImageSrc && (

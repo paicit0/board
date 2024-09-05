@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting, parentReplyId) => {
     e.preventDefault();
+    
 
     if (reply.length === 0) {
         setError("Empty Reply");
@@ -20,7 +21,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
     let replyFileUrl = '';
     let replyThumbnailFileUrl = '';
 
-    if (file) {
+    if (file && file instanceof Blob) {
         try {
             const uniqueFileName = `${Date.now()}`;
             const fileBase64 = await fileToBase64(file);
@@ -65,6 +66,10 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
             setSubmitting(false);
             return;
         }
+    } else if (file) {
+        setError('Invalid file type.');
+        setSubmitting(false);
+        return;
     }
 
     try {
@@ -88,18 +93,16 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
         setMessage('');
         setSuccess(true);
         setError('');
-        setTimeout(() => {
-            // window.location.reload();
-        }, 1000);
 
     } catch (error) {
         console.error('Error submitting reply:', error);
         setMessage('An error occurred while submitting the reply.');
         setSuccess(false);
     } finally {
-        setSubmitting(false); // Re-enable the button after submission
+        setSubmitting(false);
     }
 };
+
 
 const fileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -117,6 +120,10 @@ function Reply({ threadId, parentReplyId }) {
     const [error, setError] = useState(''); 
     const [file, setFile] = useState(null);
     const [submitting, setSubmitting] = useState(false);
+
+    // console.log("Reply Component Here!");
+    // console.log("Replying to thread:", threadId);
+    // console.log("Replying to parent reply ID:", parentReplyId);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);

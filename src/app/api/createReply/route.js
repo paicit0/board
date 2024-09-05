@@ -31,7 +31,6 @@ export async function POST(req) {
       replyId,
       threadId,
       parentReplyId: parentReplyId || null,
-      createdAt: new Date(),
       replyContent,
       replyFileUrl,
       replyThumbnailFileUrl,
