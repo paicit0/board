@@ -89,6 +89,7 @@ const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess
         }
 
         const data = await response.json();
+        console.log("Reply Component Response: ", data)
         setReply('');
         setMessage('');
         setSuccess(true);

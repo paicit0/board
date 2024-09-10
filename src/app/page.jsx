@@ -73,8 +73,8 @@ export default function Home() {
         return [...threads].sort((a, b) => a.replyCount - b.replyCount);
       case 'reply-desc':
         return [...threads].sort((a, b) => b.replyCount - a.replyCount);
-      // case 'bump-order':
-      //   return [...threads].sort((a, b) => new Date(b.latestReplyAt) - new Date(a.latestReplyAt));
+      case 'bump-order':
+        return [...threads].sort((a, b) => new Date(b.latestReplyAt) - new Date(a.latestReplyAt));
       default:
         return threads;
     }
@@ -94,7 +94,7 @@ export default function Home() {
               <option value="date-asc">Date (Oldest)</option>
               <option value="reply-asc">Replies (Fewest)</option>
               <option value="reply-desc">Replies (Most)</option>
-              {/* <option value="bump-order">Bump Order</option> */}
+              <option value="bump-order">Bump Order</option>
             </select>
           </div>
         </div>
