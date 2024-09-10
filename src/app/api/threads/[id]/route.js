@@ -15,8 +15,11 @@ export async function GET(req, { params }) {
       if (!thread) {
         return NextResponse.json({ success: false, message: 'Thread not found' }, { status: 404 });
       }
-  
-      return NextResponse.json({ success: true, data: thread }, { status: 200 });
+      else{ 
+        return NextResponse.json({ success: true, data: thread }, { status: 200 });
+      }
+      
+
     } catch (error) {
       console.error('Error fetching thread:', error);
       return NextResponse.json({ success: false, message: 'Error fetching thread' }, { status: 500 });

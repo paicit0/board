@@ -20,7 +20,7 @@ export default function ThreadPage() {
   useEffect(() => {
     const fetchThread = async () => {
       try {
-        const response = await fetch(`/api/threads/${id}`);
+        const response = await fetch(`/api/threads/${id}`); // GET threads/id
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
@@ -89,7 +89,7 @@ export default function ThreadPage() {
             <img
               src={enlargedImages[reply.replyFileUrl] ? reply.replyFileUrl : reply.replyThumbnailFileUrl}
               alt="Reply Image"
-              className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
+              className={`max-w-min h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
               onClick={() => toggleImageSize(reply.replyFileUrl)}
             />
           )}
@@ -150,7 +150,7 @@ export default function ThreadPage() {
             <img 
               src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
               alt="Thread Image"
-              className={`max-w-full h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
+              className={`max-w-min h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
               onClick={() => toggleImageSize(thread.threadFileUrl)}
             />
           )}
@@ -161,7 +161,7 @@ export default function ThreadPage() {
         {replyTo === thread.threadId && <Reply threadId={thread.threadId} parentReplyId={null} />}
       </div>
       {thread.replies.length > 0 ? (
-        <ul className="space-y-4 p-6">
+        <ul className="space-y-4 p-6 mb-44">
           {thread.replies
             .filter(reply => reply.parentReplyId === null)
             .map(reply => (
