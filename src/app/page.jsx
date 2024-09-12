@@ -75,6 +75,8 @@ export default function Home() {
         return [...threads].sort((a, b) => b.replyCount - a.replyCount);
       case 'bump-order':
         return [...threads].sort((a, b) => new Date(b.latestReplyAt) - new Date(a.latestReplyAt));
+      // case 'starts-with-D':
+      //   return [...threads].filter((a) => a.title.startsWith('d'));
       default:
         return threads;
     }
@@ -95,6 +97,7 @@ export default function Home() {
               <option value="reply-asc">Replies (Fewest)</option>
               <option value="reply-desc">Replies (Most)</option>
               <option value="bump-order">Bump Order</option>
+              {/* <option value="starts-with-D">starts With D</option> */}
             </select>
           </div>
         </div>
