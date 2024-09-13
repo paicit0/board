@@ -4,7 +4,6 @@ import React from "react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Notification from "@/components/Notification";
 import { AuthProvider } from "./Providers";
 
 const Layout = ({ children }) => {
