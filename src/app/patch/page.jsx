@@ -9,13 +9,10 @@ export default function Home() {
   useEffect(() => {
     async function fetchReadme() {
       try {
-        const response = await fetch('https://api.github.com/repos/paicit0/board/readme', {
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
+        const response = await fetch('https://api.github.com/repos/paicit0/board/readme')
         const data = await response.json();
         const readmeContent = atob(data.content); // decodes base64 string
+        console.log(readmeContent);
         setReadme(marked(readmeContent)); // markdown to html
       } catch (error) {
         console.error('Error fetching README:', error);
