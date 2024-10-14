@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
-const threadSchema = new Schema({
+const threadSchema = new Schema(
+    {
     threadId: {
         type: Number,
         required: true,
@@ -38,7 +39,8 @@ const threadSchema = new Schema({
         type: Date, 
         default: Date.now 
     },
-}, { timestamps: true });
+}, { timestamps: true }
+);
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
 export default Thread;

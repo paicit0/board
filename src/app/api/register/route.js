@@ -13,6 +13,7 @@ export async function POST(req) {
 
     await connectMongoDB();
 
+
     const userExists = await User.findOne({ email });
     if (userExists) {
       return NextResponse.json({ message: "User already exists." }, { status: 400 });

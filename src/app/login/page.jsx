@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  // const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -17,19 +19,18 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (submitting) return; // Prevent multiple submissions
+    if (submitting) return; 
+    setSubmitting(true);
 
-    setSubmitting(true); // Disable further submissions
-
-    if (!email || !password) {
+    if (!emailRef.current.value || !passwordRef.current.value) {
       setError("Please complete all inputs.");
       return;
     }
 
     try {
       const res = await signIn("credentials", {
-        email,
-        password,
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
         redirect: false,
       });
 
@@ -65,13 +66,13 @@ function LoginPage() {
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              ref={emailRef}
               className="w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2"
               placeholder="Enter your email"
             />
             <input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              ref={passwordRef}
               className="w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2"
               placeholder="Enter your password"
             />

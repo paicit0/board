@@ -21,7 +21,6 @@ function RegisterPage() {
     }
   }, [session, router]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,21 +43,6 @@ function RegisterPage() {
       return;
     }
 
-    const resCheckUser = await fetch("http://localhost:3000/api/checkUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email })
-    });
-
-    const { user } = await resCheckUser.json();
-
-    if (user) { 
-      setError("User already exists.");
-      return;
-    }
-
     try {
       const res = await fetch("http://localhost:3000/api/register", {
         method: "POST",
@@ -67,6 +51,13 @@ function RegisterPage() {
         },
         body: JSON.stringify({ email, password })
       });
+
+      const { message } = await res.json();
+
+      if (message === "User already exists.") {
+        setError("User already exists.");
+        return;
+      }
 
       if (res.ok) {
         setError("");

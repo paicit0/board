@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 const handleSubmit = async (e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting, parentReplyId) => {
-    e.preventDefault();
+    // e.preventDefault();
     
 
     if (reply.length === 0) {
@@ -133,8 +133,8 @@ function Reply({ threadId, parentReplyId }) {
     return (
         <div className="sticky bottom-0 left-0 w-full p-4 bg-white pb-16">
             <form onSubmit={(e) => {
-                e.preventDefault();
-                setSubmitting(true); // Disable the button immediately on submit
+                // e.preventDefault();
+                setSubmitting(true); 
                 handleSubmit(e, reply, setReply, setMessage, threadId, setSuccess, setError, file, setSubmitting, parentReplyId);
             }}>
                 <div className="flex flex-col">

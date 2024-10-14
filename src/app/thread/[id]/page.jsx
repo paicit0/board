@@ -14,13 +14,13 @@ export default function ThreadPage() {
   const [replyTo, setReplyTo] = useState(null);
 
   const handleReply = (replyId) => {
-    setReplyTo(replyTo === replyId ? null : replyId); // Toggle reply form visibility
+    setReplyTo(replyTo === replyId ? null : replyId); 
   };
 
   useEffect(() => {
     const fetchThread = async () => {
       try {
-        const response = await fetch(`/api/threads/${id}`); // GET threads/id
+        const response = await fetch(`/api/threads/${id}`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }

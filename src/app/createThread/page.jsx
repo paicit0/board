@@ -129,7 +129,7 @@ function CreateThreadPage() {
       threadFileUrl: fileUrl,
       threadThumbnailFileUrl: thumbnailUrl
     };
-
+    
     try {
       const response = await fetch('/api/createThread', {
         method: 'POST',

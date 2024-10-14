@@ -8,22 +8,25 @@ const Navbar = () => {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="text-white bg-sky-600 p-4 flex items-center justify-between border-b-2  md:h-16 lg:px-20 xl:px-40">
+    <nav className="text-white bg-sky-600 p-4 flex items-center justify-between border-b-2 md:h-16 lg:px-20 xl:px-40">
       {/* LEFT LINKS */}
-      <div className="hidden md:flex gap-4 flex-1">
+      <div className="hidden md:flex gap-4">
         <Link href="/">Home</Link>
       </div>
 
-      <div className="text-xl md:font-bold flex-1 md:text-center">
-        <Link href="/">Board</Link>
+      {/* CENTER LINKS */}
+      <div className="flex-1 text-center">
+        <Link href="/" className="text-xl font-bold">Board</Link>
       </div>
 
-      {/* MOBILE MENU */}
-      <div className="md:hidden">
-      </div>
-      
       {/* RIGHT LINKS */}
-      <div className="hidden md:flex gap-4 items-center justify-end flex-1">
+      <div className="flex gap-4 items-center">
+        {session?.user?.role === "admin" && (
+          <div className="hidden md:flex gap-4">
+            <Link href="/userList">Users</Link>
+          </div>
+        )}
+
         {status === "loading" ? (
           <p>Loading...</p>
         ) : !session ? (
@@ -31,7 +34,10 @@ const Navbar = () => {
         ) : (
           <>
             <Link href="/profile">Profile</Link>
-            <button onClick={() => signOut({ callbackUrl: '/login' })}>
+            <button
+              className="px-3 py-1 rounded"
+              onClick={() => signOut({ callbackUrl: '/login' })}
+            >
               Sign Out
             </button>
           </>
