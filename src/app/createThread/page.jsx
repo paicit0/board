@@ -122,15 +122,15 @@ function CreateThreadPage() {
       setSubmitting(false);
       return;
     }
-
-    const data = {
-      title,
-      threadContent,
-      threadFileUrl: fileUrl,
-      threadThumbnailFileUrl: thumbnailUrl
-    };
     
     try {
+      const data = {
+        title,
+        threadContent,
+        threadFileUrl: fileUrl,
+        threadThumbnailFileUrl: thumbnailUrl
+      };
+      
       const response = await fetch('/api/createThread', {
         method: 'POST',
         headers: {
@@ -138,6 +138,7 @@ function CreateThreadPage() {
         },
         body: JSON.stringify(data),
       });
+
       if (response.ok) {
         setSuccess("Thread created successfully...");
         setTimeout(() => {

@@ -1,21 +1,19 @@
-"use client";
+"use client"
 
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Reply from "@/components/Reply";
+import ReplyForm from "@/components/ReplyForm";
 import { Tooltip } from 'react-tooltip';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function ThreadPage() {
+  const { data: session } = useSession();
   const { id } = useParams();
   const [thread, setThread] = useState(null);
   const [error, setError] = useState(null);
   const [enlargedImages, setEnlargedImages] = useState({});
   const [replyTo, setReplyTo] = useState(null);
-
-  const handleReply = (replyId) => {
-    setReplyTo(replyTo === replyId ? null : replyId); 
-  };
 
   useEffect(() => {
     const fetchThread = async () => {
@@ -25,6 +23,7 @@ export default function ThreadPage() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
+        // console.log(data);
         if (data.success) {
           setThread(data.data);
         } else {
@@ -39,6 +38,52 @@ export default function ThreadPage() {
       fetchThread();
     }
   }, [id]);
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  };
+
+  if (!thread) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  };
+
+  const handleReply = (replyId) => {
+    setReplyTo(replyTo === replyId ? null : replyId);
+  };
+
+  const handleDeleteReply = async (replyId) => {
+    console.log("Trying to delete threadId: ", replyId);
+
+    const data = { replyId };
+
+    try {
+      const response = await fetch('/api/deleteReply', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      // fetchThreads();
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Delete is working.", result.message);
+      } else {
+        console.error("Delete Error.", result.error);
+      }
+
+    } catch (error) {
+      console.error("Network Error:", error);
+
+    }
+
+  }
 
   const toggleImageSize = (imageId) => {
     setEnlargedImages((prev) => ({
@@ -96,8 +141,15 @@ export default function ThreadPage() {
           <p className="text-black mb-4 break-words w-1/2 mt-2">{reply.replyContent}</p>
         </div>
         <button className="mb-2 text-right" onClick={() => handleReply(reply.replyId)}>REPLY</button>
-        {replyTo === reply.replyId && <Reply threadId={threadId} parentReplyId={reply.replyId} />}
-        
+        {replyTo === reply.replyId && <ReplyForm threadId={threadId} parentReplyId={reply.replyId} />}
+        {session?.user?.role === "admin" ? (
+          <div>
+            <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Edit</button>
+            <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={() => handleDeleteReply(reply.replyId)}>Delete</button>
+          </div>)
+          : (null)
+        }
+
         {childReplies.length > 0 && (
           <ul className="pl-4 mt-4 border-l-2 border-gray-300">
             {childReplies.map(childReply => (
@@ -118,18 +170,6 @@ export default function ThreadPage() {
     );
   };
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  };
-
-  if (!thread) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
-    );
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="p-8 border-b flex flex-col">
@@ -147,7 +187,7 @@ export default function ThreadPage() {
         <h2 className="text-3xl mb-4 mt-2 break-words">{thread.title}</h2>
         <div className="flex items-start mb-4">
           {thread.threadFileUrl && (
-            <img 
+            <img
               src={enlargedImages[thread.threadFileUrl] ? thread.threadFileUrl : thread.threadThumbnailFileUrl}
               alt="Thread Image"
               className={`max-w-min h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
@@ -158,8 +198,10 @@ export default function ThreadPage() {
         </div>
         <p className="mb-2 text-right">Reply: {thread.replyCount}</p>
         <button className="mb-2 text-right" onClick={() => handleReply(thread.threadId)}>REPLY</button>
-        {replyTo === thread.threadId && <Reply threadId={thread.threadId} parentReplyId={null} />}
+        {replyTo === thread.threadId && <ReplyForm threadId={thread.threadId} parentReplyId={null} />}
+
       </div>
+
       {thread.replies.length > 0 ? (
         <ul className="space-y-4 p-6 mb-44">
           {thread.replies

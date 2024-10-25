@@ -114,7 +114,7 @@ const fileToBase64 = (file) => {
     });
 };
 
-function Reply({ threadId, parentReplyId }) {
+function ReplyForm({ threadId, parentReplyId }) {
     const [reply, setReply] = useState('');
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false); 
@@ -165,4 +165,4 @@ function Reply({ threadId, parentReplyId }) {
     );
 }
 
-export default Reply;
+export default ReplyForm;

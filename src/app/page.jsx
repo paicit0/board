@@ -41,7 +41,6 @@ export default function Home() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-
     const day = date.toLocaleDateString('en-US', { weekday: 'short' });
     const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const dayOfMonth = String(date.getDate()).padStart(2, '0');
@@ -100,7 +99,7 @@ export default function Home() {
 
   // }
 
-  const handleDelete = async (threadId) => {
+  const handleDeleteThread = async (threadId) => {
     console.log("Trying to delete threadId: ", threadId);
 
     const data = { threadId };
@@ -113,7 +112,8 @@ export default function Home() {
         },
         body: JSON.stringify(data),
       });
-      fetchThreads();
+
+      await fetchThreads();
 
       const result = await response.json();
 
@@ -125,8 +125,11 @@ export default function Home() {
 
   } catch (error) {
     console.error("Network Error:", error);
-
   }
+}
+
+const handleEditThread = async (threadId) => {
+  console.log("Trying to edit threadId: ", threadId);
 
 }
 
@@ -178,7 +181,7 @@ export default function Home() {
                 {session?.user?.role==="admin" ? (
                   <div> 
                     <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Edit</button>
-                    <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>handleDelete(thread.threadId)}>Delete</button>
+                    <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={()=>handleDeleteThread(thread.threadId)}>Delete</button>
                   </div>) 
                   : (null)
                   }
