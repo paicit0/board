@@ -136,6 +136,7 @@ export default function ThreadPage() {
               alt="Reply Image"
               className={`max-w-min h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[reply.replyFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
               onClick={() => toggleImageSize(reply.replyFileUrl)}
+              loading="lazy"
             />
           )}
           <p className="text-black mb-4 break-words w-1/2 mt-2">{reply.replyContent}</p>
@@ -192,6 +193,7 @@ export default function ThreadPage() {
               alt="Thread Image"
               className={`max-w-min h-auto mb-4 mr-10 rounded-lg shadow-lg cursor-pointer ${enlargedImages[thread.threadFileUrl] ? 'w-1/2 h-full' : 'w-1/3 h-auto'}`}
               onClick={() => toggleImageSize(thread.threadFileUrl)}
+              loading="lazy"
             />
           )}
           <p className="text-black break-words w-1/2">{thread.threadContent}</p>

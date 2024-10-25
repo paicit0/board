@@ -165,6 +165,7 @@ const handleEditThread = async (threadId) => {
                       src={thread.threadThumbnailFileUrl} 
                       alt="Thread Thumbnail" 
                       className="my-2 max-w-full h-auto rounded-lg shadow-lg"
+                      loading="lazy"
                     />
                   </Link>
                   </div>

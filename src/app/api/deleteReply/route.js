@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectMongoDB } from "../../../../lib/mongodb";
 import Reply from "../../../../models/reply";
 import { getServerSession } from "next-auth"; 
-import { authOptions } from "@/app/api/auth/[...nextauth]";
+import { authOptions } from "next-auth";
 
 export async function DELETE(req) {
     await connectMongoDB();
