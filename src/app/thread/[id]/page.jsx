@@ -23,7 +23,6 @@ export default function ThreadPage() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        // console.log(data);
         if (data.success) {
           setThread(data.data);
         } else {
@@ -227,3 +226,5 @@ export default function ThreadPage() {
     </div>
   );
 };
+
+
