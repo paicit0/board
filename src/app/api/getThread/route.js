@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../../lib/mongodb';
 import Thread from '../../../../models/thread';
-import Counter from '../../../../models/counter';
 
 export async function GET() {
     try {
